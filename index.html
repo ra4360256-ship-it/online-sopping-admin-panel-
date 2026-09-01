@@ -1,863 +1,2803 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quotex AI Bot - AI Binary Options & Trading Chart Signal Analyzer</title>
-  <!-- Font Awesome Icons & Google Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --bg-color: #090D16;
-      --card-bg: #0F172A;
-      --border-color: #1E293B;
-      --primary-green: #10B981;
-      --primary-red: #F43F5E;
-      --text-main: #FFFFFF;
-      --text-muted: #94A3B8;
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0,
+maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#090D16">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>QUOTEX AI BOT</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+/* =========================
+   ROOT
+========================= */
+
+:root{
+    --bg:#090D16;
+    --card:#0F172A;
+    --border:#1E293B;
+    --green:#10B981;
+    --red:#F43F5E;
+    --white:#FFFFFF;
+    --muted:#94A3B8;
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Inter,sans-serif;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+    background:var(--bg);
+    color:var(--white);
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+
+/* =========================
+   APP
+========================= */
+
+.app{
+    width:100%;
+    max-width:520px;
+    min-height:100vh;
+    background:var(--bg);
+    position:relative;
+    overflow:hidden;
+}
+
+
+/* =========================
+   SPLASH
+========================= */
+
+#splash{
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.splash-inner{
+    width:90%;
+    max-width:420px;
+    text-align:center;
+}
+
+.splash-robot{
+    width:90px;
+    height:90px;
+    margin:auto;
+    border-radius:24px;
+    background:var(--card);
+    border:1px solid rgba(16,185,129,.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--green);
+    font-size:45px;
+    box-shadow:
+        0 0 20px rgba(16,185,129,.2);
+}
+
+.splash-title{
+    margin-top:20px;
+    font-size:25px;
+    font-weight:900;
+}
+
+.splash-title span{
+    color:var(--green);
+}
+
+.splash-sub{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:8px;
+    margin-bottom:30px;
+}
+
+.progress-bg{
+    height:7px;
+    width:100%;
+    background:var(--border);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress{
+    width:0%;
+    height:100%;
+    background:var(--green);
+    transition:.05s;
+}
+
+.progress-text{
+    color:var(--green);
+    font-size:12px;
+    margin-top:8px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    height:64px;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 15px;
+
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(16,185,129,.13);
+    color:var(--green);
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:900;
+}
+
+.brand-name span{
+    color:var(--green);
+}
+
+.pro{
+    font-size:9px;
+    font-weight:bold;
+
+    color:var(--green);
+
+    background:rgba(16,185,129,.12);
+
+    border:1px solid rgba(16,185,129,.3);
+
+    padding:5px 8px;
+    border-radius:7px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+    min-height:calc(100vh - 64px);
+
+    padding:16px;
+    padding-bottom:95px;
+}
+
+.tab{
+    display:none;
+}
+
+.tab.active{
+    display:block;
+}
+
+
+/* =========================
+   UPLOAD CARD
+========================= */
+
+.upload{
+    background:var(--card);
+
+    border:2px dashed
+    rgba(16,185,129,.45);
+
+    border-radius:20px;
+
+    padding:30px 18px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.upload:active{
+    transform:scale(.99);
+}
+
+.upload-icon{
+    width:62px;
+    height:62px;
+
+    margin:auto;
+
+    border-radius:16px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(16,185,129,.1);
+
+    color:var(--green);
+
+    font-size:28px;
+}
+
+.upload-title{
+    font-size:16px;
+    font-weight:bold;
+    margin-top:14px;
+}
+
+.upload-sub{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:6px;
+}
+
+#preview{
+    display:none;
+
+    width:100%;
+    max-height:280px;
+
+    object-fit:contain;
+
+    margin-top:16px;
+
+    border-radius:12px;
+
+    background:#000;
+}
+
+#fileInput{
+    display:none;
+}
+
+
+/* =========================
+   ANALYZE BUTTON
+========================= */
+
+.action{
+    display:none;
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border:0;
+    border-radius:15px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-weight:bold;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+}
+
+.action:active{
+    transform:scale(.98);
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+    display:none;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:30px 15px;
+
+    text-align:center;
+
+    margin-top:15px;
+}
+
+.spinner{
+    width:43px;
+    height:43px;
+
+    margin:0 auto 18px;
+
+    border-radius:50%;
+
+    border:4px solid
+    rgba(16,185,129,.12);
+
+    border-left-color:var(--green);
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
+    to{
+        transform:rotate(360deg);
     }
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
+}
+
+.loading-title{
+    font-weight:bold;
+}
+
+.loading-sub{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:7px;
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+.result{
+    display:none;
+
+    margin-top:15px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    background:var(--card);
+
+    border:2px solid var(--green);
+
+    box-shadow:
+        0 0 20px
+        rgba(16,185,129,.12);
+}
+
+.result.down{
+    border-color:var(--red);
+
+    box-shadow:
+        0 0 20px
+        rgba(244,63,94,.12);
+}
+
+.result-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+
+    margin-bottom:15px;
+}
+
+.signal-id{
+    font-size:9px;
+
+    color:var(--muted);
+
+    background:var(--border);
+
+    padding:5px 9px;
+
+    border-radius:7px;
+}
+
+.confidence{
+    font-size:9px;
+    font-weight:bold;
+
+    color:var(--green);
+
+    background:
+        rgba(16,185,129,.13);
+
+    padding:5px 9px;
+
+    border-radius:7px;
+}
+
+.result.down .confidence{
+    color:var(--red);
+
+    background:
+        rgba(244,63,94,.13);
+}
+
+.prediction{
+    padding:20px 10px;
+
+    border-radius:15px;
+
+    background:
+        rgba(16,185,129,.1);
+
+    color:var(--green);
+
+    font-size:23px;
+
+    font-weight:900;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+}
+
+.result.down .prediction{
+    background:
+        rgba(244,63,94,.1);
+
+    color:var(--red);
+}
+
+.detail-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:9px 0;
+
+    font-size:12px;
+
+    border-bottom:
+        1px solid rgba(30,41,59,.5);
+}
+
+.detail-row:last-of-type{
+    border-bottom:0;
+}
+
+.detail-row span:first-child{
+    color:var(--muted);
+}
+
+.detail-row span:last-child{
+    font-weight:bold;
+    text-align:right;
+    max-width:68%;
+}
+
+.reset{
+    width:100%;
+
+    border:0;
+
+    background:var(--border);
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    margin-top:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   FLOATING AI BOT
+========================= */
+
+#floatingBot{
+
+    position:fixed;
+
+    right:20px;
+    bottom:88px;
+
+    width:88px;
+    height:88px;
+
+    z-index:5000;
+
+    cursor:pointer;
+
+    touch-action:none;
+
+    user-select:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+}
+
+
+/* Outer rotating ring */
+
+.bot-outer-ring{
+
+    position:absolute;
+
+    width:88px;
+    height:88px;
+
+    border-radius:50%;
+
+    border:8px solid transparent;
+
+    border-top-color:var(--red);
+    border-right-color:var(--red);
+
+    border-bottom-color:var(--green);
+    border-left-color:var(--green);
+
+    animation:
+        botRotate 2.2s linear infinite;
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(244,63,94,.7)
+        )
+        drop-shadow(
+            0 0 7px
+            rgba(16,185,129,.6)
+        );
+}
+
+
+/* Second ring */
+
+.bot-ring-two{
+
+    position:absolute;
+
+    width:73px;
+    height:73px;
+
+    border-radius:50%;
+
+    border:2px dashed
+        rgba(255,255,255,.35);
+
+    animation:
+        botRotateReverse 4s linear infinite;
+}
+
+
+/* Glow */
+
+.bot-glow{
+
+    position:absolute;
+
+    width:64px;
+    height:64px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(16,185,129,.35),
+            rgba(244,63,94,.12),
+            transparent 70%
+        );
+
+    animation:
+        botGlow 1.5s ease-in-out infinite;
+}
+
+
+/* Center */
+
+.bot-center{
+
+    position:relative;
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #754cff,
+            #28155e 55%,
+            #10091f
+        );
+
+    border:
+        2px solid
+        rgba(255,255,255,.25);
+
+    color:white;
+
+    font-size:26px;
+
+    box-shadow:
+        inset 0 0 14px
+        rgba(255,255,255,.12),
+
+        0 0 15px
+        rgba(90,60,255,.5);
+
+    z-index:5;
+}
+
+
+/* Bot small text */
+
+.bot-label{
+
+    position:absolute;
+
+    bottom:-17px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    white-space:nowrap;
+
+    background:rgba(15,23,42,.95);
+
+    border:
+        1px solid
+        rgba(16,185,129,.35);
+
+    color:var(--green);
+
+    font-size:8px;
+
+    font-weight:bold;
+
+    padding:3px 7px;
+
+    border-radius:6px;
+}
+
+
+/* Bot animations */
+
+@keyframes botRotate{
+
+    from{
+        transform:rotate(0deg);
     }
 
-    /* Mobile Frame Wrapper */
-    .app-container {
-      width: 100%;
-      max-width: 480px;
-      background-color: var(--bg-color);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      min-height: 100vh;
-      border-left: 1px solid var(--border-color);
-      border-right: 1px solid var(--border-color);
+    to{
+        transform:rotate(360deg);
     }
 
-    /* Splash Screen */
-    #splash-screen {
-      position: absolute;
-      inset: 0;
-      background-color: var(--bg-color);
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 24px;
+}
+
+@keyframes botRotateReverse{
+
+    from{
+        transform:rotate(360deg);
     }
 
-    .splash-header {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
+    to{
+        transform:rotate(0deg);
     }
 
-    .splash-body {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+}
+
+@keyframes botGlow{
+
+    0%,100%{
+        transform:scale(.92);
+        opacity:.6;
     }
 
-    .splash-icon-box {
-      width: 90px;
-      height: 90px;
-      background-color: var(--card-bg);
-      border-radius: 20px;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 46px;
-      color: var(--primary-green);
-      margin-bottom: 20px;
+    50%{
+        transform:scale(1.08);
+        opacity:1;
     }
 
-    .splash-title {
-      font-size: 24px;
-      font-weight: 900;
+}
+
+
+/* Press effect */
+
+#floatingBot.bot-pressed{
+
+    transform:scale(.9);
+}
+
+
+/* =========================
+   BOT ANALYZING
+========================= */
+
+#floatingBot.analyzing
+.bot-outer-ring{
+
+    animation:
+        botRotate .55s linear infinite;
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.clear{
+
+    border:0;
+
+    background:none;
+
+    color:var(--red);
+
+    font-size:11px;
+
+    cursor:pointer;
+}
+
+.history-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:var(--card);
+
+    border:
+        1px solid
+        rgba(16,185,129,.3);
+
+    border-radius:15px;
+
+    padding:13px;
+
+    margin-bottom:10px;
+}
+
+.history-item.down{
+
+    border-color:
+        rgba(244,63,94,.3);
+}
+
+.history-icon{
+
+    width:40px;
+    height:40px;
+
+    border-radius:11px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:
+        rgba(16,185,129,.12);
+
+    color:var(--green);
+}
+
+.history-item.down
+.history-icon{
+
+    background:
+        rgba(244,63,94,.12);
+
+    color:var(--red);
+}
+
+.history-info{
+    flex:1;
+    min-width:0;
+}
+
+.history-title{
+
+    font-weight:bold;
+
+    font-size:13px;
+
+    color:var(--green);
+}
+
+.history-item.down
+.history-title{
+
+    color:var(--red);
+}
+
+.history-pattern{
+
+    font-size:10px;
+
+    color:#CBD5E1;
+
+    margin-top:4px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+}
+
+.history-time{
+
+    font-size:9px;
+
+    color:var(--muted);
+
+    margin-top:3px;
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+.setting-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:16px;
+
+    margin-bottom:14px;
+}
+
+.setting-title{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    margin-bottom:12px;
+}
+
+.option{
+
+    display:flex;
+
+    gap:10px;
+
+    margin:12px 0;
+
+    font-size:13px;
+}
+
+.option small{
+
+    display:block;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    margin-top:4px;
+}
+
+.switch{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:100%;
+
+    max-width:520px;
+
+    height:65px;
+
+    background:var(--card);
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+
+    z-index:3000;
+
+    padding-bottom:
+        env(safe-area-inset-bottom);
+}
+
+.nav-btn{
+
+    position:relative;
+
+    flex:1;
+
+    border:0;
+
+    background:none;
+
+    color:var(--muted);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:4px;
+
+    font-size:10px;
+
+    cursor:pointer;
+}
+
+.nav-btn.active{
+    color:var(--green);
+}
+
+.badge{
+
+    position:absolute;
+
+    display:none;
+
+    margin-left:25px;
+
+    margin-top:-20px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:8px;
+
+    padding:2px 5px;
+
+    border-radius:10px;
+}
+
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+
+    margin-top:15px;
+
+    color:var(--muted);
+
+    text-align:center;
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:360px){
+
+    #floatingBot{
+
+        right:14px;
+
+        bottom:88px;
+
+        transform:scale(.9);
+        transform-origin:bottom right;
     }
 
-    .splash-title span {
-      color: var(--primary-green);
+    .brand-name{
+        font-size:13px;
     }
 
-    .splash-subtitle {
-      color: var(--text-muted);
-      font-size: 12px;
-      margin-top: 6px;
-      margin-bottom: 40px;
+    main{
+        padding:12px;
     }
 
-    .progress-box {
-      width: 100%;
+    .prediction{
+        font-size:20px;
     }
 
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
+}
 
-    .progress-bar-bg {
-      width: 100%;
-      height: 6px;
-      background-color: var(--border-color);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill {
-      width: 0%;
-      height: 100%;
-      background-color: var(--primary-green);
-      transition: width 0.03s linear;
-    }
-
-    .splash-footer {
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    /* Header Bar */
-    header {
-      background-color: var(--card-bg);
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-icon {
-      background-color: rgba(16, 185, 129, 0.15);
-      color: var(--primary-green);
-      padding: 6px 8px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .brand-title {
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .brand-title span {
-      color: var(--primary-green);
-    }
-
-    .pro-badge {
-      background-color: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: var(--primary-green);
-      font-weight: bold;
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 8px;
-    }
-
-    /* Main View Area */
-    main {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      padding-bottom: 80px;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Upload Box */
-    .upload-card {
-      background-color: var(--card-bg);
-      border: 2px dashed rgba(16, 185, 129, 0.4);
-      border-radius: 20px;
-      padding: 28px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .upload-card:hover {
-      border-color: var(--primary-green);
-    }
-
-    .upload-icon {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: var(--primary-green);
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin: 0 auto 14px auto;
-    }
-
-    #preview-img {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-top: 16px;
-      display: none;
-    }
-
-    .btn-action {
-      width: 100%;
-      background-color: var(--primary-green);
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 16px;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    /* Loading Card */
-    .loading-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 28px;
-      text-align: center;
-      display: none;
-    }
-
-    .spinner {
-      border: 4px solid rgba(16, 185, 129, 0.1);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border-left-color: var(--primary-green);
-      animation: spin 1s linear infinite;
-      margin: 0 auto 20px auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Result Card */
-    .result-card {
-      background-color: var(--card-bg);
-      border-radius: 24px;
-      padding: 20px;
-      border: 2px solid var(--primary-green);
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
-      display: none;
-    }
-
-    .result-card.down-signal {
-      border-color: var(--primary-red);
-      box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .signal-id {
-      background-color: var(--border-color);
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
-
-    .confidence-badge {
-      background-color: rgba(16, 185, 129, 0.2);
-      color: var(--primary-green);
-      font-weight: bold;
-      font-size: 10px;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
-
-    .down-signal .confidence-badge {
-      background-color: rgba(244, 63, 94, 0.2);
-      color: var(--primary-red);
-    }
-
-    .prediction-box {
-      padding: 18px;
-      background-color: rgba(16, 185, 129, 0.1);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--primary-green);
-      font-size: 22px;
-      font-weight: 900;
-      margin-bottom: 16px;
-    }
-
-    .down-signal .prediction-box {
-      background-color: rgba(244, 63, 94, 0.1);
-      color: var(--primary-red);
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      font-size: 12px;
-    }
-
-    .detail-row span:first-child { color: var(--text-muted); }
-    .detail-row span:last-child { font-weight: bold; }
-
-    .btn-reset {
-      background-color: var(--border-color);
-      color: white;
-      border: none;
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      margin-top: 16px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* History List */
-    .history-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .btn-clear {
-      background: none;
-      border: none;
-      color: var(--primary-red);
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .history-item {
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .history-item.down {
-      border-color: rgba(244, 63, 94, 0.3);
-    }
-
-    .history-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(16, 185, 129, 0.15);
-      color: var(--primary-green);
-      font-size: 18px;
-    }
-
-    .history-item.down .history-icon {
-      background-color: rgba(244, 63, 94, 0.15);
-      color: var(--primary-red);
-    }
-
-    .history-details {
-      flex: 1;
-    }
-
-    .history-title {
-      font-weight: 900;
-      font-size: 14px;
-      color: var(--primary-green);
-    }
-
-    .history-item.down .history-title {
-      color: var(--primary-red);
-    }
-
-    /* Settings UI */
-    .settings-group {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-top: 12px;
-      cursor: pointer;
-    }
-
-    .switch-option {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-    }
-
-    /* Bottom Navigation */
-    nav {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background-color: var(--card-bg);
-      display: flex;
-      border-top: 1px solid var(--border-color);
-      height: 65px;
-    }
-
-    .nav-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-size: 11px;
-      gap: 4px;
-      position: relative;
-    }
-
-    .nav-btn.active {
-      color: var(--primary-green);
-    }
-
-    .badge {
-      position: absolute;
-      top: 8px;
-      right: 28%;
-      background-color: var(--primary-green);
-      color: white;
-      font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-  </style>
+</style>
 </head>
+
+
 <body>
 
-  <div class="app-container">
-    
-    <!-- Splash Screen -->
-    <div id="splash-screen">
-      <div class="splash-header">
-        <span>QUOTEX AI SYSTEM</span>
-        <span>v2.4.0 PRO</span>
-      </div>
-      <div class="splash-body">
-        <div class="splash-icon-box">
-          <i class="fa-solid fa-robot"></i>
+<div class="app">
+
+
+<!-- =========================
+     SPLASH
+========================= -->
+
+<div id="splash">
+
+    <div class="splash-inner">
+
+        <div class="splash-robot">
+
+            <i class="fa-solid fa-robot"></i>
+
         </div>
-        <div class="splash-title">QUOTEX <span>AI BOT</span></div>
-        <div class="splash-subtitle">Next-Gen AI Candlestick Signal Engine</div>
-        
-        <div class="progress-box">
-          <div class="progress-info">
-            <span style="color: #cbd5e1;">Initializing AI Engine...</span>
-            <span id="progress-text" style="color: var(--primary-green); font-weight: bold;">0%</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div id="progress-bar" class="progress-bar-fill"></div>
-          </div>
+
+        <div class="splash-title">
+
+            QUOTEX
+            <span>AI BOT</span>
+
         </div>
-      </div>
-      <div class="splash-footer">
-        Powered by Gemini Multimodal Vision • Informational Trading Assistant
-      </div>
+
+        <div class="splash-sub">
+
+            AI Chart Analysis Assistant
+
+        </div>
+
+        <div class="progress-bg">
+
+            <div id="progress"
+            class="progress">
+            </div>
+
+        </div>
+
+        <div id="progressText"
+        class="progress-text">
+
+            0%
+
+        </div>
+
     </div>
 
-    <!-- Header -->
-    <header>
-      <div class="brand-logo">
-        <div class="logo-icon"><i class="fa-solid fa-robot"></i></div>
-        <div class="brand-title">QUOTEX <span>AI BOT</span></div>
-      </div>
-      <div class="pro-badge">PRO LIVE</div>
-    </header>
+</div>
 
-    <!-- Main Content Area -->
-    <main>
-      
-      <!-- Signal AI Tab -->
-      <div id="tab-home" class="tab-content active">
-        
-        <!-- File Picker Card -->
-        <div id="upload-box" class="upload-card" onclick="document.getElementById('file-input').click()">
-          <div class="upload-icon">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-          </div>
-          <div id="upload-title" style="font-weight: bold; font-size: 16px; margin-bottom: 6px;">Upload Chart Screenshot</div>
-          <div style="color: var(--text-muted); font-size: 12px;">Tap to select a Quotex / Binary chart image</div>
-          <img id="preview-img" src="" alt="Chart Preview">
-          <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-robot"></i>
+
         </div>
 
-        <button id="analyze-btn" class="btn-action" style="display: none;" onclick="analyzeChart()">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> Analyze Chart with AI
-        </button>
+        <div class="brand-name">
 
-        <!-- Loading View -->
-        <div id="loading-box" class="loading-card">
-          <div class="spinner"></div>
-          <div style="font-weight: bold; font-size: 16px; margin-bottom: 8px;">AI Neural Chart Scan...</div>
-          <div style="color: var(--text-muted); font-size: 12px;">Evaluating candlestick patterns & indicators</div>
+            QUOTEX
+            <span>AI BOT</span>
+
         </div>
 
-        <!-- Result View -->
-        <div id="result-box" class="result-card">
-          <div class="card-top">
-            <span id="res-id" class="signal-id">ID: QX-123456</span>
-            <span id="res-confidence" class="confidence-badge">CONFIDENCE 85%</span>
-          </div>
+    </div>
 
-          <div id="res-prediction-box" class="prediction-box">
-            <i id="res-icon" class="fa-solid fa-arrow-up"></i>
-            <span id="res-prediction">CALL / UP</span>
-          </div>
+    <div class="pro">
+        PRO LIVE
+    </div>
 
-          <div class="detail-row">
-            <span>Pattern</span>
-            <span id="res-pattern">Bullish Engulfing</span>
-          </div>
-          <div class="detail-row">
-            <span>Timeframe</span>
-            <span id="res-timeframe">1 Min - 3 Min</span>
-          </div>
-          <div class="detail-row">
-            <span>Risk Level</span>
-            <span id="res-risk">LOW</span>
-          </div>
+</header>
 
-          <button class="btn-reset" onclick="resetAnalyzer()">Analyze Another Chart</button>
-        </div>
 
-      </div>
 
-      <!-- History Tab -->
-      <div id="tab-history" class="tab-content">
-        <div class="history-header">
-          <span id="history-count" style="font-weight: bold;">Signal History (0)</span>
-          <button class="btn-clear" onclick="clearHistory()"><i class="fa-solid fa-trash-sweep"></i> Clear All</button>
-        </div>
-        <div id="history-list">
-          <!-- History items injected via JS -->
-        </div>
-      </div>
+<!-- =========================
+     MAIN
+========================= -->
 
-      <!-- Settings Tab -->
-      <div id="tab-settings" class="tab-content">
-        <h3 style="margin-bottom: 16px;">Settings & Configuration</h3>
-        
-        <div class="settings-group">
-          <div style="color: var(--text-muted); font-size: 12px; font-weight: bold;">Analysis Engine Mode</div>
-          
-          <label class="radio-option">
-            <input type="radio" name="mode" value="standard" checked onchange="updateSettings('analysisMode', 'standard')">
-            <div>
-              <div style="font-weight: bold; font-size: 14px;">Standard Mode</div>
-              <div style="color: var(--text-muted); font-size: 11px;">Fast 1-5 Min candlestick pattern scan</div>
-            </div>
-          </label>
+<main>
 
-          <label class="radio-option">
-            <input type="radio" name="mode" value="advanced" onchange="updateSettings('analysisMode', 'advanced')">
-            <div>
-              <div style="font-weight: bold; font-size: 14px;">Advanced Mode (PRO)</div>
-              <div style="color: var(--text-muted); font-size: 11px;">Deep multi-indicator Fibonacci & RSI confluence</div>
-            </div>
-          </label>
-        </div>
 
-        <div class="settings-group">
-          <div class="switch-option">
-            <span>Sound Effects</span>
-            <input type="checkbox" id="sound-toggle" checked onchange="updateSettings('sound', this.checked)">
-          </div>
-          <div class="switch-option">
-            <span>Haptic Vibration</span>
-            <input type="checkbox" id="haptic-toggle" checked onchange="updateSettings('haptics', this.checked)">
-          </div>
-        </div>
-      </div>
+<!-- HOME -->
 
-    </main>
+<section
+id="home"
+class="tab active">
 
-    <!-- Bottom Navigation Bar -->
-    <nav>
-      <button class="nav-btn active" onclick="switchTab('home', this)">
-        <i class="fa-solid fa-chart-line" style="font-size: 18px;"></i>
-        <span>Signal AI</span>
-      </button>
-      <button class="nav-btn" onclick="switchTab('history', this)">
-        <i class="fa-solid fa-clock-rotate-left" style="font-size: 18px;"></i>
-        <span>History</span>
-        <span id="badge-count" class="badge" style="display: none;">0</span>
-      </button>
-      <button class="nav-btn" onclick="switchTab('settings', this)">
-        <i class="fa-solid fa-gear" style="font-size: 18px;"></i>
-        <span>Settings</span>
-      </button>
-    </nav>
 
-  </div>
+<!-- Upload -->
 
-  <script>
-    // State Management
-    let state = {
-      history: JSON.parse(localStorage.getItem('quotex_ai_history')) || [],
-      settings: JSON.parse(localStorage.getItem('quotex_ai_settings')) || {
-        analysisMode: 'standard',
-        sound: true,
-        haptics: true
-      },
-      selectedImage: null
+<div
+id="uploadBox"
+class="upload"
+onclick="openFilePicker()">
+
+    <div class="upload-icon">
+
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+    </div>
+
+    <div
+    id="uploadTitle"
+    class="upload-title">
+
+        Upload Chart Screenshot
+
+    </div>
+
+    <div class="upload-sub">
+
+        Tap here to select your chart image
+
+    </div>
+
+    <img
+    id="preview"
+    alt="Chart Preview">
+
+    <input
+    id="fileInput"
+    type="file"
+    accept="image/*"
+    onchange="selectImage(event)">
+
+</div>
+
+
+
+<!-- Analyze Button -->
+
+<button
+id="analyzeBtn"
+class="action"
+onclick="analyzeChart()">
+
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+    Analyze Chart
+
+</button>
+
+
+
+<!-- Loading -->
+
+<div
+id="loading"
+class="loading">
+
+    <div class="spinner"></div>
+
+    <div class="loading-title">
+
+        AI Neural Chart Scan...
+
+    </div>
+
+    <div class="loading-sub">
+
+        Evaluating candlestick patterns
+        and market structure
+
+    </div>
+
+</div>
+
+
+
+<!-- Result -->
+
+<div
+id="result"
+class="result">
+
+
+    <div class="result-top">
+
+        <span
+        id="signalId"
+        class="signal-id">
+
+            ID: QX-000000
+
+        </span>
+
+        <span
+        id="confidence"
+        class="confidence">
+
+            CONFIDENCE 0%
+
+        </span>
+
+    </div>
+
+
+
+    <div class="prediction">
+
+        <i
+        id="predictionIcon"
+        class="fa-solid fa-arrow-up">
+        </i>
+
+        <span
+        id="predictionText">
+
+            CALL / UP
+
+        </span>
+
+    </div>
+
+
+
+    <div class="detail-row">
+
+        <span>Pattern</span>
+
+        <span id="pattern">
+            —
+        </span>
+
+    </div>
+
+
+    <div class="detail-row">
+
+        <span>Timeframe</span>
+
+        <span id="timeframe">
+            —
+        </span>
+
+    </div>
+
+
+    <div class="detail-row">
+
+        <span>Risk Level</span>
+
+        <span id="risk">
+            —
+        </span>
+
+    </div>
+
+
+    <div class="detail-row">
+
+        <span>Type</span>
+
+        <span>
+            Informational Demo
+        </span>
+
+    </div>
+
+
+
+    <button
+    class="reset"
+    onclick="resetAnalyzer()">
+
+        Analyze Another Chart
+
+    </button>
+
+</div>
+
+
+
+<div class="notice">
+
+    এই ফলাফল শুধুমাত্র
+    chart-analysis demo/educational purpose-এর জন্য।
+    এটি নিশ্চিত trading prediction নয়।
+
+</div>
+
+
+</section>
+
+
+
+<!-- =========================
+     HISTORY
+========================= -->
+
+<section
+id="history"
+class="tab">
+
+
+<div class="history-header">
+
+    <strong id="historyCount">
+
+        Signal History (0)
+
+    </strong>
+
+    <button
+    class="clear"
+    onclick="clearHistory()">
+
+        <i class="fa-solid fa-trash"></i>
+
+        Clear All
+
+    </button>
+
+</div>
+
+
+<div id="historyList"></div>
+
+
+</section>
+
+
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<section
+id="settings"
+class="tab">
+
+
+<h3 style="margin-bottom:15px">
+
+    Settings
+
+</h3>
+
+
+<div class="setting-card">
+
+
+<div class="setting-title">
+
+    ANALYSIS MODE
+
+</div>
+
+
+<label class="option">
+
+    <input
+    type="radio"
+    name="mode"
+    value="standard"
+    checked
+    onchange="setMode('standard')">
+
+    <div>
+
+        <b>
+            Standard Mode
+        </b>
+
+        <small>
+            Fast chart pattern analysis
+        </small>
+
+    </div>
+
+</label>
+
+
+<label class="option">
+
+    <input
+    type="radio"
+    name="mode"
+    value="advanced"
+    onchange="setMode('advanced')">
+
+    <div>
+
+        <b>
+            Advanced Mode
+        </b>
+
+        <small>
+            Detailed chart structure analysis
+        </small>
+
+    </div>
+
+</label>
+
+
+</div>
+
+
+
+<div class="setting-card">
+
+
+<div class="switch">
+
+    <span>
+        Sound Effects
+    </span>
+
+    <input
+    id="sound"
+    type="checkbox"
+    checked
+    onchange="saveSetting()">
+
+</div>
+
+
+<div class="switch">
+
+    <span>
+        Haptic Vibration
+    </span>
+
+    <input
+    id="haptic"
+    type="checkbox"
+    checked
+    onchange="saveSetting()">
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FLOATING BOT
+========================= -->
+
+<div
+id="floatingBot"
+title="AI Chart Analyzer">
+
+
+    <div class="bot-outer-ring"></div>
+
+    <div class="bot-ring-two"></div>
+
+    <div class="bot-glow"></div>
+
+    <div class="bot-center">
+
+        <i class="fa-solid fa-robot"></i>
+
+    </div>
+
+    <div class="bot-label">
+
+        AI BOT
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     NAV
+========================= -->
+
+<nav>
+
+
+<button
+class="nav-btn active"
+onclick="switchTab('home',this)">
+
+    <i class="fa-solid fa-chart-line"></i>
+
+    <span>
+        Signal AI
+    </span>
+
+</button>
+
+
+<button
+class="nav-btn"
+onclick="switchTab('history',this)">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+    <span>
+        History
+    </span>
+
+    <span
+    id="badge"
+    class="badge">
+
+        0
+
+    </span>
+
+</button>
+
+
+<button
+class="nav-btn"
+onclick="switchTab('settings',this)">
+
+    <i class="fa-solid fa-gear"></i>
+
+    <span>
+        Settings
+    </span>
+
+</button>
+
+
+</nav>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================
+   STATE
+========================= */
+
+let state = {
+
+    history:
+        JSON.parse(
+            localStorage.getItem(
+                "quotex_history"
+            ) || "[]"
+        ),
+
+    settings:
+        JSON.parse(
+            localStorage.getItem(
+                "quotex_settings"
+            ) ||
+            '{"mode":"standard","sound":true,"haptic":true}'
+        ),
+
+    image:null
+
+};
+
+
+/* =========================
+   SPLASH
+========================= */
+
+window.addEventListener(
+"load",
+function(){
+
+    let value=0;
+
+    const timer=setInterval(
+    function(){
+
+        value+=2;
+
+        document
+        .getElementById("progress")
+        .style.width=value+"%";
+
+        document
+        .getElementById("progressText")
+        .innerText=value+"%";
+
+
+        if(value>=100){
+
+            clearInterval(timer);
+
+            setTimeout(
+            function(){
+
+                document
+                .getElementById("splash")
+                .style.display="none";
+
+            },250);
+
+        }
+
+    },25);
+
+
+    renderHistory();
+
+    loadSettings();
+
+});
+
+
+/* =========================
+   TAB SWITCH
+========================= */
+
+function switchTab(
+name,
+button
+){
+
+    document
+    .querySelectorAll(".tab")
+    .forEach(
+        x=>x.classList.remove("active")
+    );
+
+
+    document
+    .querySelectorAll(".nav-btn")
+    .forEach(
+        x=>x.classList.remove("active")
+    );
+
+
+    document
+    .getElementById(name)
+    .classList.add("active");
+
+
+    button.classList.add("active");
+
+}
+
+
+/* =========================
+   FILE PICKER
+========================= */
+
+function openFilePicker(){
+
+    document
+    .getElementById("fileInput")
+    .click();
+
+}
+
+
+/* =========================
+   SELECT IMAGE
+========================= */
+
+function selectImage(event){
+
+    const file=
+        event.target.files[0];
+
+    if(!file)return;
+
+
+    if(!file.type.startsWith("image/")){
+
+        alert(
+            "Please select a chart image."
+        );
+
+        return;
+
+    }
+
+
+    const reader=
+        new FileReader();
+
+
+    reader.onload=function(e){
+
+        state.image=e.target.result;
+
+
+        const preview=
+            document.getElementById(
+                "preview"
+            );
+
+
+        preview.src=e.target.result;
+
+        preview.style.display="block";
+
+
+        document
+        .getElementById(
+            "uploadTitle"
+        )
+        .innerText=
+            "Chart Image Selected";
+
+
+        document
+        .getElementById(
+            "analyzeBtn"
+        )
+        .style.display="flex";
+
     };
 
-    // Splash Progress Simulation
-    window.addEventListener('DOMContentLoaded', () => {
-      let progress = 0;
-      const progressBar = document.getElementById('progress-bar');
-      const progressText = document.getElementById('progress-text');
-      
-      const interval = setInterval(() => {
-        progress += 2;
-        progressBar.style.width = progress + '%';
-        progressText.innerText = progress + '%';
 
-        if (progress >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            document.getElementById('splash-screen').style.display = 'none';
-          }, 200);
-        }
-      }, 30);
+    reader.readAsDataURL(file);
 
-      renderHistory();
-    });
+}
 
-    // Switch Navigation Tabs
-    function switchTab(tabName, btn) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-      
-      document.getElementById(`tab-${tabName}`).classList.add('active');
-      btn.classList.add('active');
+
+/* =========================
+   BOT CLICK
+========================= */
+
+const bot=
+    document.getElementById(
+        "floatingBot"
+    );
+
+
+bot.addEventListener(
+"click",
+function(){
+
+    if(!state.image){
+
+        /*
+        No image:
+        open image picker
+        */
+
+        openFilePicker();
+
+        return;
+
     }
 
-    // Image Upload Handler
-    function handleFileSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          state.selectedImage = e.target.result;
-          const img = document.getElementById('preview-img');
-          img.src = e.target.result;
-          img.style.display = 'block';
-          
-          document.getElementById('upload-title').innerText = 'Chart Image Selected';
-          document.getElementById('analyze-btn').style.display = 'flex';
-        }
-        reader.readAsDataURL(file);
-      }
+
+    analyzeChart();
+
+});
+
+
+/* =========================
+   BOT DRAG
+========================= */
+
+let dragging=false;
+
+let moved=false;
+
+let startX=0;
+let startY=0;
+
+let botStartX=0;
+let botStartY=0;
+
+
+bot.addEventListener(
+"pointerdown",
+function(e){
+
+    dragging=true;
+
+    moved=false;
+
+    startX=e.clientX;
+    startY=e.clientY;
+
+
+    const rect=
+        bot.getBoundingClientRect();
+
+    botStartX=rect.left;
+    botStartY=rect.top;
+
+
+    bot.classList.add(
+        "bot-pressed"
+    );
+
+    bot.setPointerCapture(
+        e.pointerId
+    );
+
+});
+
+
+bot.addEventListener(
+"pointermove",
+function(e){
+
+    if(!dragging)return;
+
+
+    const dx=e.clientX-startX;
+    const dy=e.clientY-startY;
+
+
+    if(
+        Math.abs(dx)>5 ||
+        Math.abs(dy)>5
+    ){
+
+        moved=true;
+
     }
 
-    // Chart Analysis Logic (Simulation Engine)
-    function analyzeChart() {
-      if (!state.selectedImage) return;
 
-      document.getElementById('upload-box').style.display = 'none';
-      document.getElementById('analyze-btn').style.display = 'none';
-      document.getElementById('loading-box').style.display = 'block';
+    if(!moved)return;
 
-      setTimeout(() => {
-        const isUp = Math.random() > 0.45;
-        const confidence = Math.floor(Math.random() * 25) + (state.settings.analysisMode === 'advanced' ? 72 : 65);
-        
-        const patterns = [
-          'Bullish Engulfing Pattern near 0.618 Fib',
-          'Bearish Pin Bar Rejection at Resistance',
-          'Double Bottom with RSI Divergence',
-          'Three White Soldiers Trend Acceleration',
-          'Morning Star Candlestick Formation',
-          'Inverted Head & Shoulders Breakout'
+
+    let newX=
+        botStartX+dx;
+
+    let newY=
+        botStartY+dy;
+
+
+    const maxX=
+        window.innerWidth-
+        bot.offsetWidth-
+        5;
+
+    const maxY=
+        window.innerHeight-
+        bot.offsetHeight-
+        70;
+
+
+    newX=Math.max(
+        5,
+        Math.min(
+            newX,
+            maxX
+        )
+    );
+
+
+    newY=Math.max(
+        5,
+        Math.min(
+            newY,
+            maxY
+        )
+    );
+
+
+    bot.style.left=
+        newX+"px";
+
+    bot.style.top=
+        newY+"px";
+
+    bot.style.right="auto";
+
+    bot.style.bottom="auto";
+
+});
+
+
+bot.addEventListener(
+"pointerup",
+function(){
+
+    dragging=false;
+
+    bot.classList.remove(
+        "bot-pressed"
+    );
+
+});
+
+
+/* =========================
+   ANALYSIS
+========================= */
+
+function analyzeChart(){
+
+    if(!state.image){
+
+        openFilePicker();
+
+        return;
+
+    }
+
+
+    document
+    .getElementById(
+        "uploadBox"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "analyzeBtn"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "result"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "loading"
+    )
+    .style.display="block";
+
+
+    bot.classList.add(
+        "analyzing"
+    );
+
+
+    if(
+        state.settings.haptic &&
+        navigator.vibrate
+    ){
+
+        navigator.vibrate(80);
+
+    }
+
+
+    setTimeout(
+    function(){
+
+        /*
+        DEMO ONLY
+        */
+
+        const up=
+            Math.random()>=0.5;
+
+
+        let confidence=
+            state.settings.mode===
+            "advanced"
+
+            ?Math.floor(
+                Math.random()*16
+            )+75
+
+            :Math.floor(
+                Math.random()*16
+            )+65;
+
+
+        if(confidence>95){
+            confidence=95;
+        }
+
+
+        const patterns=up?
+
+        [
+            "Bullish Momentum Pattern",
+            "Support Rejection",
+            "Higher High Structure",
+            "Bullish Candlestick Setup"
+        ]:
+
+        [
+            "Bearish Momentum Pattern",
+            "Resistance Rejection",
+            "Lower Low Structure",
+            "Bearish Candlestick Setup"
         ];
 
-        const now = new Date();
-        const signalItem = {
-          id: 'QX-' + Math.floor(100000 + Math.random() * 900000),
-          prediction: isUp ? 'UP' : 'DOWN',
-          confidence: confidence,
-          pattern: patterns[Math.floor(Math.random() * patterns.length)],
-          timeframe: state.settings.analysisMode === 'advanced' ? '1 Min - 3 Min' : '1 Min - 5 Min',
-          riskLevel: confidence > 80 ? 'LOW' : 'MEDIUM',
-          dateStr: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-          timeStr: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+
+        const pattern=
+            patterns[
+                Math.floor(
+                    Math.random()*
+                    patterns.length
+                )
+            ];
+
+
+        const now=new Date();
+
+
+        const item={
+
+            id:
+                "QX-"+
+                Math.floor(
+                    100000+
+                    Math.random()*900000
+                ),
+
+            prediction:
+                up
+                ?"UP"
+                :"DOWN",
+
+            confidence:
+
+                confidence,
+
+            pattern:
+
+                pattern,
+
+            timeframe:
+
+                state.settings.mode===
+                "advanced"
+
+                ?"1 Min - 3 Min"
+                :"1 Min - 5 Min",
+
+            risk:
+
+                confidence>=80
+                ?"MEDIUM"
+                :"HIGH",
+
+            date:
+
+                now.toLocaleDateString(),
+
+            time:
+
+                now.toLocaleTimeString(
+                    [],
+                    {
+                        hour:"2-digit",
+                        minute:"2-digit"
+                    }
+                )
+
         };
 
-        // Render Result Card
-        const resultCard = document.getElementById('result-box');
-        if (isUp) {
-          resultCard.classList.remove('down-signal');
-          document.getElementById('res-prediction-box').style.color = 'var(--primary-green)';
-          document.getElementById('res-prediction').innerText = 'CALL / UP';
-          document.getElementById('res-icon').className = 'fa-solid fa-arrow-up';
-        } else {
-          resultCard.classList.add('down-signal');
-          document.getElementById('res-prediction-box').style.color = 'var(--primary-red)';
-          document.getElementById('res-prediction').innerText = 'PUT / DOWN';
-          document.getElementById('res-icon').className = 'fa-solid fa-arrow-down';
+
+        showResult(item);
+
+
+        state.history.unshift(item);
+
+
+        if(
+            state.history.length>50
+        ){
+
+            state.history=
+                state.history.slice(
+                    0,
+                    50
+                );
+
         }
 
-        document.getElementById('res-id').innerText = `ID: ${signalItem.id}`;
-        document.getElementById('res-confidence').innerText = `CONFIDENCE ${signalItem.confidence}%`;
-        document.getElementById('res-pattern').innerText = signalItem.pattern;
-        document.getElementById('res-timeframe').innerText = signalItem.timeframe;
-        document.getElementById('res-risk').innerText = signalItem.riskLevel;
 
-        document.getElementById('loading-box').style.display = 'none';
-        resultCard.style.display = 'block';
+        localStorage.setItem(
+            "quotex_history",
+            JSON.stringify(
+                state.history
+            )
+        );
 
-        // Save to state and storage
-        state.history.unshift(signalItem);
-        localStorage.setItem('quotex_ai_history', JSON.stringify(state.history));
+
         renderHistory();
 
-      }, 3000); // 3 seconds analysis time
+
+    },2000);
+
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+function showResult(item){
+
+    const result=
+        document.getElementById(
+            "result"
+        );
+
+
+    result.classList.toggle(
+        "down",
+        item.prediction==="DOWN"
+    );
+
+
+    document
+    .getElementById(
+        "signalId"
+    )
+    .innerText=
+        "ID: "+item.id;
+
+
+    document
+    .getElementById(
+        "confidence"
+    )
+    .innerText=
+        "CONFIDENCE "+
+        item.confidence+
+        "%";
+
+
+    document
+    .getElementById(
+        "predictionText"
+    )
+    .innerText=
+
+        item.prediction==="UP"
+
+        ?"CALL / UP"
+
+        :"PUT / DOWN";
+
+
+    document
+    .getElementById(
+        "predictionIcon"
+    )
+    .className=
+
+        item.prediction==="UP"
+
+        ?"fa-solid fa-arrow-up"
+
+        :"fa-solid fa-arrow-down";
+
+
+    document
+    .getElementById(
+        "pattern"
+    )
+    .innerText=
+        item.pattern;
+
+
+    document
+    .getElementById(
+        "timeframe"
+    )
+    .innerText=
+        item.timeframe;
+
+
+    document
+    .getElementById(
+        "risk"
+    )
+    .innerText=
+        item.risk;
+
+
+    document
+    .getElementById(
+        "loading"
+    )
+    .style.display="none";
+
+
+    result.style.display="block";
+
+
+    bot.classList.remove(
+        "analyzing"
+    );
+
+
+    if(
+        state.settings.haptic &&
+        navigator.vibrate
+    ){
+
+        navigator.vibrate(
+            [100,70,100]
+        );
+
     }
 
-    // Reset Analyzer View
-    function resetAnalyzer() {
-      state.selectedImage = null;
-      document.getElementById('file-input').value = '';
-      document.getElementById('preview-img').style.display = 'none';
-      document.getElementById('upload-title').innerText = 'Upload Chart Screenshot';
-      
-      document.getElementById('result-box').style.display = 'none';
-      document.getElementById('upload-box').style.display = 'block';
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetAnalyzer(){
+
+    state.image=null;
+
+
+    document
+    .getElementById(
+        "fileInput"
+    )
+    .value="";
+
+
+    document
+    .getElementById(
+        "preview"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "uploadTitle"
+    )
+    .innerText=
+        "Upload Chart Screenshot";
+
+
+    document
+    .getElementById(
+        "uploadBox"
+    )
+    .style.display="block";
+
+
+    document
+    .getElementById(
+        "analyzeBtn"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "result"
+    )
+    .style.display="none";
+
+
+    document
+    .getElementById(
+        "loading"
+    )
+    .style.display="none";
+
+
+    bot.classList.remove(
+        "analyzing"
+    );
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function renderHistory(){
+
+    const list=
+        document.getElementById(
+            "historyList"
+        );
+
+
+    const count=
+        document.getElementById(
+            "historyCount"
+        );
+
+
+    const badge=
+        document.getElementById(
+            "badge"
+        );
+
+
+    count.innerText=
+        "Signal History ("+
+        state.history.length+
+        ")";
+
+
+    if(state.history.length){
+
+        badge.style.display=
+            "block";
+
+        badge.innerText=
+            state.history.length;
+
+    }else{
+
+        badge.style.display=
+            "none";
+
     }
 
-    // Render History
-    function renderHistory() {
-      const historyList = document.getElementById('history-list');
-      const badgeCount = document.getElementById('badge-count');
-      const historyCount = document.getElementById('history-count');
 
-      historyCount.innerText = `Signal History (${state.history.length})`;
+    if(!state.history.length){
 
-      if (state.history.length > 0) {
-        badgeCount.style.display = 'inline-block';
-        badgeCount.innerText = state.history.length;
-      } else {
-        badgeCount.style.display = 'none';
-      }
+        list.innerHTML=`
 
-      if (state.history.length === 0) {
-        historyList.innerHTML = `
-          <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
-            <i class="fa-solid fa-clock-rotate-left" style="font-size: 48px; margin-bottom: 12px; opacity: 0.3;"></i>
-            <div style="font-weight: bold; color: white;">No Signal History</div>
-            <div style="font-size: 12px; margin-top: 4px;">Uploaded chart signal predictions will appear here.</div>
-          </div>`;
-        return;
-      }
+        <div style="
+        text-align:center;
+        padding:50px 10px;
+        color:var(--muted);
+        ">
 
-      historyList.innerHTML = state.history.map((item, index) => `
-        <div class="history-item ${item.prediction === 'DOWN' ? 'down' : ''}">
-          <div class="history-icon">
-            <i class="fa-solid fa-trending-${item.prediction === 'UP' ? 'up' : 'down'}"></i>
-          </div>
-          <div class="history-details">
-            <div style="display: flex; justify-content: space-between;">
-              <span class="history-title">${item.prediction === 'UP' ? 'CALL / UP 🟢' : 'PUT / DOWN 🔴'}</span>
-              <span style="font-size: 12px; font-weight: bold;">${item.confidence}%</span>
+            <i
+            class="fa-solid fa-clock-rotate-left"
+            style="
+            font-size:45px;
+            opacity:.25;
+            ">
+            </i>
+
+            <div style="
+            margin-top:12px;
+            font-weight:bold;
+            color:white;
+            ">
+
+                No Signal History
+
             </div>
-            <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">${item.pattern}</div>
-            <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">${item.dateStr} • ${item.timeStr}</div>
-          </div>
-          <i class="fa-solid fa-xmark" style="color: var(--text-muted); cursor: pointer;" onclick="deleteHistoryItem(${index})"></i>
+
+            <div style="
+            font-size:11px;
+            margin-top:5px;
+            ">
+
+                Your chart analysis
+                history will appear here.
+
+            </div>
+
         </div>
-      `).join('');
+
+        `;
+
+        return;
+
     }
 
-    // Delete single history item
-    function deleteHistoryItem(index) {
-      state.history.splice(index, 1);
-      localStorage.setItem('quotex_ai_history', JSON.stringify(state.history));
-      renderHistory();
+
+    list.innerHTML=
+        state.history.map(
+        (item,index)=>`
+
+        <div class="
+        history-item
+        ${
+            item.prediction==="DOWN"
+            ?"down"
+            :""
+        }
+        ">
+
+
+            <div class="history-icon">
+
+                <i class="
+                fa-solid
+                ${
+                    item.prediction==="UP"
+                    ?"fa-arrow-trend-up"
+                    :"fa-arrow-trend-down"
+                }
+                ">
+                </i>
+
+            </div>
+
+
+            <div class="history-info">
+
+                <div style="
+                display:flex;
+                justify-content:space-between;
+                ">
+
+                    <span
+                    class="history-title">
+
+                        ${
+                            item.prediction==="UP"
+                            ?"CALL / UP 🟢"
+                            :"PUT / DOWN 🔴"
+                        }
+
+                    </span>
+
+                    <b style="
+                    font-size:11px;
+                    ">
+
+                        ${
+                            item.confidence
+                        }%
+
+                    </b>
+
+                </div>
+
+
+                <div
+                class="history-pattern">
+
+                    ${
+                        escapeHTML(
+                            item.pattern
+                        )
+                    }
+
+                </div>
+
+
+                <div
+                class="history-time">
+
+                    ${
+                        item.date
+                    }
+
+                    •
+
+                    ${
+                        item.time
+                    }
+
+                </div>
+
+            </div>
+
+
+            <i
+            class="fa-solid fa-xmark"
+            style="
+            color:var(--muted);
+            cursor:pointer;
+            "
+            onclick="
+            deleteHistory(${index})
+            ">
+
+            </i>
+
+
+        </div>
+
+        `
+        ).join("");
+
+}
+
+
+/* =========================
+   DELETE HISTORY
+========================= */
+
+function deleteHistory(index){
+
+    state.history.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "quotex_history",
+        JSON.stringify(
+            state.history
+        )
+    );
+
+
+    renderHistory();
+
+}
+
+
+/* =========================
+   CLEAR HISTORY
+========================= */
+
+function clearHistory(){
+
+    if(
+        !state.history.length
+    ){
+
+        return;
+
     }
 
-    // Clear all history
-    function clearHistory() {
-      state.history = [];
-      localStorage.removeItem('quotex_ai_history');
-      renderHistory();
+
+    if(
+        !confirm(
+            "Clear all signal history?"
+        )
+    ){
+
+        return;
+
     }
 
-    // Settings Update
-    function updateSettings(key, value) {
-      state.settings[key] = value;
-      localStorage.setItem('quotex_ai_settings', JSON.stringify(state.settings));
+
+    state.history=[];
+
+
+    localStorage.removeItem(
+        "quotex_history"
+    );
+
+
+    renderHistory();
+
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+function setMode(mode){
+
+    state.settings.mode=
+        mode;
+
+    saveSettings();
+
+}
+
+
+function saveSetting(){
+
+    state.settings.sound=
+        document
+        .getElementById(
+            "sound"
+        )
+        .checked;
+
+
+    state.settings.haptic=
+        document
+        .getElementById(
+            "haptic"
+        )
+        .checked;
+
+
+    saveSettings();
+
+}
+
+
+function saveSettings(){
+
+    localStorage.setItem(
+        "quotex_settings",
+        JSON.stringify(
+            state.settings
+        )
+    );
+
+}
+
+
+function loadSettings(){
+
+    document
+    .getElementById(
+        "sound"
+    )
+    .checked=
+        state.settings.sound;
+
+
+    document
+    .getElementById(
+        "haptic"
+    )
+    .checked=
+        state.settings.haptic;
+
+
+    const radio=
+        document.querySelector(
+            'input[name="mode"][value="'+
+            state.settings.mode+
+            '"]'
+        );
+
+
+    if(radio){
+
+        radio.checked=true;
+
     }
-  </script>
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
 </body>
-               </html>
+  </html>
