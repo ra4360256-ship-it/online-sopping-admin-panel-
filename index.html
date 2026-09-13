@@ -1,235 +1,2117 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QX BINARY TRADER AI</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>OLIM TRADE PRO — Trade Smarter, Grow Faster 🚀</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233b82f6'/%3E%3Ctext x='50' y='68' font-size='54' font-weight='800' fill='white' text-anchor='middle' font-family='Arial'%3EOL%3C/text%3E%3C/svg%3E" />
 
-        body {
-            background-color: #0b0e14;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 10px;
-        }
+<style>
+:root {
+  --bg:#0a0e1a; --bg-elev:#111827; --bg-card:#151c2c; --bg-card-2:#1a2236;
+  --border:#223052; --text:#e6ecff; --text-dim:#8fa1c7; --text-mute:#5a6b8c;
+  --primary:#3b82f6; --primary-2:#2563eb; --accent:#8b5cf6;
+  --profit:#10b981; --loss:#ef4444; --warn:#f59e0b;
+  --radius-sm:8px; --radius:14px; --radius-lg:20px; --radius-xl:28px;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
+  --content-max:560px; --content-wide:1100px; --bottom-nav-h:68px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{overscroll-behavior-y:none}
+button,input,select,textarea{font-family:inherit;color:inherit;font-size:16px}
+a{color:var(--primary);text-decoration:none}
+img{max-width:100%;display:block}
 
-        .phone-screen {
-            width: 100%;
-            max-width: 380px;
-            height: 650px;
-            background: linear-gradient(180deg, #121824 0%, #080a0f 100%);
-            border-radius: 20px;
-            border: 2px solid #2a3245;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 15px;
-        }
+.app-shell{min-height:100dvh;display:flex;flex-direction:column;padding-top:var(--safe-top);padding-left:var(--safe-left);padding-right:var(--safe-right);background:radial-gradient(1200px 600px at 20% -10%,rgba(59,130,246,.18),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(139,92,246,.14),transparent 60%),var(--bg)}
+.page{width:100%;max-width:var(--content-max);margin:0 auto;padding:16px;padding-bottom:calc(var(--bottom-nav-h) + 24px + var(--safe-bottom));animation:fadeIn .22s ease}
+@media(min-width:900px){.page{max-width:var(--content-wide);padding:24px}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
 
-        .top-bar {
-            background: rgba(22, 29, 43, 0.9);
-            padding: 12px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #2a3245;
-        }
+.card{background:linear-gradient(180deg,var(--bg-card),var(--bg-card-2));border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.card-tight{padding:12px}
 
-        .pair-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #00b0ff;
-        }
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:var(--radius);border:1px solid transparent;cursor:pointer;font-weight:600;min-height:44px;transition:transform .12s ease,background .16s ease,opacity .16s ease;user-select:none;font-size:14px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff}
+.btn-accent{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff}
+.btn-profit{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+.btn-loss{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text)}
+.btn-block{width:100%}
 
-        .floating-widget {
-            position: absolute;
-            top: 220px;
-            right: 20px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
+.input,.select{width:100%;min-height:48px;background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;outline:none;transition:border .16s,box-shadow .16s}
+.input:focus,.select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+.input::placeholder{color:var(--text-mute)}
+.label{display:block;font-size:13px;color:var(--text-dim);margin-bottom:6px;font-weight:500}
+.field{margin-bottom:14px}
 
-        .widget-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #2a384c 0%, #111722 100%);
-            border: 3px solid #00b0ff;
-            box-shadow: 0 0 15px rgba(0, 176, 255, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.badge{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;display:inline-block}
+.badge-pending{background:rgba(245,158,11,.16);color:#f59e0b}
+.badge-approved{background:rgba(16,185,129,.16);color:#10b981}
+.badge-rejected{background:rgba(239,68,68,.16);color:#ef4444}
+.badge-processing{background:rgba(59,130,246,.16);color:#3b82f6}
+.badge-info{background:rgba(139,92,246,.16);color:#8b5cf6}
+.badge-mute{background:rgba(90,107,140,.2);color:var(--text-dim)}
 
-        .widget-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: #ff9100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-        }
+.text-profit{color:var(--profit)}.text-loss{color:var(--loss)}.text-warn{color:var(--warn)}
+.text-dim{color:var(--text-dim)}.text-mute{color:var(--text-mute)}.text-center{text-align:center}
+.row{display:flex;align-items:center;gap:10px}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.col{display:flex;flex-direction:column;gap:10px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mt-6{margin-top:24px}
+.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
+.fs-11{font-size:11px}.fs-12{font-size:12px}.fs-13{font-size:13px}.fs-14{font-size:14px}
+.fs-16{font-size:16px}.fs-18{font-size:18px}.fs-20{font-size:20px}.fs-24{font-size:24px}
+.fw-500{font-weight:500}.fw-600{font-weight:600}.fw-700{font-weight:700}.fw-800{font-weight:800}
 
-        .widget-label {
-            margin-top: 6px;
-            font-size: 10px;
-            font-weight: 900;
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 4px 8px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 176, 255, 0.4);
-            text-align: center;
-        }
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:15px;box-shadow:0 6px 18px rgba(59,130,246,.35)}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-name{font-weight:800;font-size:14px;letter-spacing:.3px}
+.logo-tag{font-size:10px;color:var(--text-dim);font-weight:500}
 
-        .signal-popup {
-            position: absolute;
-            top: 180px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.8);
-            width: 220px;
-            background: rgba(13, 17, 23, 0.95);
-            border-radius: 14px;
-            border: 2px solid #00b0ff;
-            padding: 15px;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
+.app-header{position:sticky;top:0;z-index:30;padding-top:var(--safe-top);backdrop-filter:blur(10px);background:rgba(10,14,26,.75);border-bottom:1px solid var(--border)}
+.app-header-inner{max-width:var(--content-max);margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+@media(min-width:900px){.app-header-inner{max-width:var(--content-wide)}}
 
-        .signal-popup.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) scale(1);
-        }
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;padding-bottom:var(--safe-bottom);background:rgba(10,14,26,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);z-index:50}
+.bottom-nav-inner{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--bottom-nav-h)}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-mute);font-size:11px;font-weight:600;background:none;border:none;cursor:pointer;transition:color .16s}
+.nav-item.active{color:var(--primary)}
+.nav-icon{font-size:20px;line-height:1}
 
-        .popup-action {
-            font-size: 20px;
-            font-weight: 900;
-            margin: 8px 0;
-        }
+.bell{position:relative;background:transparent;border:none;cursor:pointer;color:var(--text);font-size:20px;padding:8px;min-width:44px;min-height:44px}
+.bell-badge{position:absolute;top:2px;right:2px;min-width:18px;height:18px;border-radius:9px;background:var(--loss);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px}
 
-        .bottom-panel {
-            background: rgba(22, 29, 43, 0.9);
-            border-radius: 12px;
-            padding: 12px;
-            border: 1px solid #2a3245;
-            text-align: center;
-            font-size: 12px;
-            color: #8b949e;
-        }
-    </style>
+.support-fab{position:fixed;right:16px;bottom:calc(var(--bottom-nav-h) + 16px + var(--safe-bottom));z-index:40;min-height:48px;padding:0 18px;border-radius:999px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(34,197,94,.4);display:flex;align-items:center;gap:6px;font-size:14px}
+
+.skel{background:linear-gradient(90deg,#151c2c 0%,#1e2840 50%,#151c2c 100%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:var(--radius-sm)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.toast-container{position:fixed;top:calc(var(--safe-top) + 12px);left:50%;transform:translateX(-50%);z-index:100;width:min(92vw,420px);display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.5);animation:slideDown .22s ease;pointer-events:auto}
+.toast-title{font-weight:700;font-size:13px;margin-bottom:2px}
+.toast-msg{font-size:12px;color:var(--text-dim)}
+
+.conn-banner{position:fixed;top:0;left:0;right:0;padding:6px 12px;text-align:center;font-size:12px;font-weight:600;z-index:90;padding-top:calc(var(--safe-top) + 6px)}
+.conn-online{background:rgba(16,185,129,.14);color:#10b981}
+.conn-offline{background:rgba(239,68,68,.14);color:#ef4444}
+
+.mode-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,.14);color:#f59e0b;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.mode-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:pulse 1.6s infinite}
+
+.divider{height:1px;background:var(--border);margin:14px 0}
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
+
+.hero-balance{background:linear-gradient(135deg,#1e3a8a 0%,#7c3aed 100%);border-radius:var(--radius-lg);padding:20px;position:relative;overflow:hidden}
+.hero-balance::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,.15),transparent 70%);border-radius:50%}
+.balance-amt{font-size:32px;font-weight:800;letter-spacing:-1px}
+.balance-lbl{font-size:12px;opacity:.85;font-weight:500}
+
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.qa-btn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:10px 4px;color:#fff;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:11px;font-weight:600;transition:background .16s}
+.qa-btn:active{background:rgba(255,255,255,.24)}
+.qa-icon{font-size:18px}
+
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tile{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-size:11px;font-weight:600;color:var(--text);transition:transform .12s,border-color .16s}
+.tile:active{transform:scale(.97)}
+.tile-icon{font-size:22px}
+.tile:hover{border-color:var(--primary)}
+
+.market-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .16s}
+.market-item:last-child{border-bottom:none}
+.market-item:active{background:var(--bg-card-2)}
+.market-symbol{font-weight:700;font-size:14px}
+.market-cat{font-size:11px;color:var(--text-mute);margin-top:2px}
+.market-price{text-align:right;font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.market-change{font-size:11px;font-weight:600;margin-top:2px}
+
+.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-tab{padding:8px 14px;border-radius:999px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-dim);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .16s}
+.cat-tab.active{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-color:transparent}
+
+.amount-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.preset-btn{background:var(--bg-elev);border:1px solid var(--border);border-radius:10px;padding:10px 4px;color:var(--text);font-weight:600;font-size:13px;cursor:pointer;transition:all .16s;min-height:44px}
+.preset-btn.active{background:linear-gradient(135deg,var(--primary),var(--primary-2));border-color:transparent;color:#fff}
+.preset-btn:active{transform:scale(.96)}
+
+.chart-box{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:8px;position:relative;overflow:hidden;height:220px}
+.chart-box canvas{width:100% !important;height:100% !important;display:block}
+
+.trade-btn{flex:1;min-height:56px;border-radius:var(--radius);border:none;font-size:16px;font-weight:800;cursor:pointer;transition:transform .12s;letter-spacing:.5px;color:#fff}
+.trade-btn:active{transform:scale(.97)}
+.trade-btn.up{background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 6px 20px rgba(16,185,129,.35)}
+.trade-btn.down{background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 6px 20px rgba(239,68,68,.35)}
+.trade-btn:disabled{opacity:.5;cursor:not-allowed}
+
+.countdown-ring{width:80px;height:80px;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto}
+.countdown-ring::before{content:'';position:absolute;inset:-3px;border-radius:50%;border:3px solid transparent;border-top-color:var(--primary);animation:spin 1s linear infinite}
+.countdown-val{font-size:22px;font-weight:800}
+
+.list-item{padding:14px;border-bottom:1px solid var(--border)}
+.list-item:last-child{border-bottom:none}
+.list-item-btn{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .16s}
+.list-item-btn:last-child{border-bottom:none}
+.list-item-btn:active{background:var(--bg-card-2)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--text-mute)}
+.empty-icon{font-size:48px;margin-bottom:10px;opacity:.5}
+
+.alert{padding:12px 14px;border-radius:var(--radius);font-size:13px;line-height:1.5}
+.alert-warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#fbbf24}
+.alert-info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#93c5fd}
+.alert-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.alert-success{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+
+.auth-wrap{min-height:100dvh;display:flex;flex-direction:column;padding:24px;padding-top:calc(24px + var(--safe-top))}
+.auth-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;max-width:440px;width:100%;margin:auto}
+
+.tabs{display:flex;background:var(--bg-elev);border-radius:12px;padding:4px;margin-bottom:16px}
+.tab{flex:1;text-align:center;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-dim);transition:all .16s;border:none;background:none}
+.tab.active{background:var(--bg-card);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+
+.toast-error{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);color:#fca5a5}
+.toast-success{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:#6ee7b7}
+
+.splash{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px}
+.splash-logo{width:88px;height:88px;border-radius:24px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;color:#fff;box-shadow:0 12px 40px rgba(59,130,246,.5);animation:pulse 2s infinite}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s}
+@media(min-width:600px){.modal-overlay{align-items:center}}
+.modal{background:var(--bg-card);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:20px;width:100%;max-width:480px;padding-bottom:calc(20px + var(--safe-bottom));max-height:90dvh;overflow-y:auto}
+@media(min-width:600px){.modal{border-radius:var(--radius-lg)}}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
+
+.guest-banner{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;padding:10px 14px;border-radius:var(--radius);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+
+.verified-badge{background:rgba(16,185,129,.15);color:#6ee7b7;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+.unverified-badge{background:rgba(245,158,11,.15);color:#fbbf24;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+</style>
 </head>
 <body>
 
-<div class="phone-screen">
-    <div class="top-bar">
-        <div>
-            <div class="pair-title">EUR/USD (OTC)</div>
-            <div style="font-size: 10px; color: #8b949e;">Quotex Market</div>
-        </div>
-        <div style="font-weight: bold;" id="price">1.0854</div>
+<div id="root">
+  <div class="splash">
+    <div class="splash-logo">OL</div>
+    <div style="text-align:center">
+      <div class="fs-20 fw-800">OLIM TRADE PRO</div>
+      <div class="fs-13 text-dim mt-2">Trade Smarter, Grow Faster 🚀</div>
     </div>
-
-    <div class="signal-popup" id="signalPopup">
-        <div style="font-size: 11px; color: #8b949e;">GEMINI AI SIGNAL</div>
-        <div class="popup-action" id="signalText">ANALYZING...</div>
-        <div style="font-size: 11px; color: #ffcc00;">1 MINUTE</div>
-    </div>
-
-    <div class="floating-widget" onclick="getAISignal()">
-        <div class="widget-circle">
-            <div class="widget-icon">☠️</div>
-        </div>
-        <div class="widget-label">𝙌𝙓 𝘽𝙄𝙉𝘼𝙍𝙔 𝙏𝙍𝘼𝘿𝙀𝙍 𓆪</div>
-    </div>
-
-    <div class="bottom-panel" id="status">
-        Tap the <b>𝙌𝙓 𝘽𝙄𝙉𝘼𝙍𝙔 𝙏𝙍𝘼𝘿𝙀𝙍</b> button for Gemini AI prediction.
-    </div>
+    <div class="spinner" style="margin-top:20px"></div>
+  </div>
 </div>
 
-<script>
-    // আপনার Gemini API Key এখানে বসান
-    const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
-    let busy = false;
+<div class="toast-container" id="toasts"></div>
+<div id="modal-root"></div>
 
-    async function getAISignal() {
-        if (busy) return;
-        busy = true;
+<script type="module">
+/* ============================================================
+   OLIM TRADE PRO — USER APP (FIXED VERSION)
+   Firebase Realtime Database + Auth + Storage + FCM
+   ============================================================ */
 
-        const popup = document.getElementById('signalPopup');
-        const text = document.getElementById('signalText');
-        const status = document.getElementById('status');
-        const priceElement = document.getElementById('price');
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail,
+  updateProfile, EmailAuthProvider, reauthenticateWithCredential,
+  updatePassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getDatabase, ref, onValue, get, set, update, push, child,
+  query, limitToLast
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import {
+  getStorage, ref as sRef, uploadBytes, getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-        popup.classList.add('active');
-        text.innerText = "AI ANALYZING...";
-        text.style.color = "#00b0ff";
-        status.innerText = "Connecting to Gemini AI model...";
+/* ---------- Firebase Config ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyAXf8aHHFlRC5Sw5zB_m_x0aV89YoWn1S0",
+  authDomain: "olim-trade-pro.firebaseapp.com",
+  databaseURL: "https://olim-trade-pro-default-rtdb.firebaseio.com",
+  projectId: "olim-trade-pro",
+  storageBucket: "olim-trade-pro.firebasestorage.app",
+  messagingSenderId: "401055535209",
+  appId: "1:401055535209:web:935643896f114368b0d2f8",
+  measurementId: "G-TQR0ZYLP5Z"
+};
 
-        // কাল্পনিক ক্যান্ডেল ডেটা তৈরি
-        const currentPrice = (1.0850 + Math.random() * 0.0010).toFixed(4);
-        priceElement.innerText = currentPrice;
-        
-        const promptText = `Act as a Binary Trading AI Indicator. Analyze current market price ${currentPrice} for EUR/USD. Respond with ONLY one word: "CALL" or "PUT".`;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const storage = getStorage(app);
 
-        try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }]
-                })
-            });
+/* ---------- State ---------- */
+const S = {
+  user: null,
+  profile: null,
+  wallet: { balance: 0, currency: "USD" },
+  settings: {
+    appName: "OLIM TRADE PRO",
+    tagline: "Trade Smarter, Grow Faster 🚀",
+    support: { enabled: true, title: "Live Support", url: "https://ma01337304396-design.github.io/Online-shopping-admin/" },
+    maintenanceMode: false,
+    depositRate: 128,
+    withdrawRate: 125,
+    depositLimits: { min: 1, max: 100000 },
+    withdrawLimits: { min: 1, max: 350 },
+    durations: [
+      { seconds: 5, enabled: true }, { seconds: 10, enabled: true }, { seconds: 30, enabled: true },
+      { seconds: 60, enabled: true }, { seconds: 120, enabled: true }, { seconds: 180, enabled: true },
+      { seconds: 300, enabled: true }, { seconds: 600, enabled: true }
+    ],
+    depositPresets: [1,3,5,10,25,50,100,200],
+    paymentMethods: {},
+    requireDepositScreenshot: false,
+  },
+  markets: {},
+  notifications: [],
+  trades: [],
+  activeTrade: null,
+  deposits: [],
+  withdrawals: [],
+  tutorials: [],
+  connection: true,
+  settingsLoaded: false,
+  authLoaded: false,
+  unsubs: [],
+  currentRoute: "home",
+  guest: false,
+};
 
-            const data = await response.json();
-            const aiResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toUpperCase();
+/* ---------- Utils ---------- */
+const $ = (s, el=document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtUSD = (n) => "$" + (Number(n)||0).toFixed(2);
+const fmtBDT = (n) => "৳" + Number(n||0).toLocaleString("en-IN");
+const nowMs = () => Date.now();
+const isHttps = (u) => !!u && /^https:\/\//i.test(u);
 
-            if (aiResponse && aiResponse.includes("CALL")) {
-                text.innerText = "CALL (UP) ↑";
-                text.style.color = "#00e676";
-                status.innerHTML = "<span style='color:#00e676'>Gemini AI: BUY Signal</span>";
-            } else {
-                text.innerText = "PUT (DOWN) ↓";
-                text.style.color = "#ff1744";
-                status.innerHTML = "<span style='color:#ff1744'>Gemini AI: SELL Signal</span>";
-            }
-        } catch (error) {
-            // API Key না থাকলে বা এরর হলে ফালব্যাক লজিক
-            const isBuy = Math.random() > 0.5;
-            text.innerText = isBuy ? "CALL (UP) ↑" : "PUT (DOWN) ↓";
-            text.style.color = isBuy ? "#00e676" : "#ff1744";
-            status.innerText = "Signal generated (Fallback Mode).";
-        }
+function toast(msg, type="info", duration=3200) {
+  const c = $("#toasts");
+  if (!c) return;
+  const el = document.createElement("div");
+  el.className = "toast" + (type==="error" ? " toast-error" : type==="success" ? " toast-success" : "");
+  el.innerHTML = `<div class="toast-msg">${esc(msg)}</div>`;
+  c.appendChild(el);
+  setTimeout(() => { el.style.opacity = "0"; setTimeout(()=>el.remove(), 200); }, duration);
+}
 
-        setTimeout(() => {
-            popup.classList.remove('active');
-            busy = false;
-            status.innerText = "Ready for next signal.";
-        }, 3500);
+/* ---------- Router ---------- */
+const PROTECTED = new Set(["trade","wallet","history","profile","deposit","withdraw","verification","referral","notifications"]);
+
+function nav(route) {
+  if (PROTECTED.has(route) && !S.user) {
+    S.guest = true;
+    toast("Login required to continue");
+    route = "login";
+  }
+  S.currentRoute = route;
+  render();
+  window.scrollTo(0,0);
+}
+
+/* ---------- Firebase Data Subscriptions ---------- */
+function subscribeSettings() {
+  const r = ref(db, "appSettings");
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || {};
+    S.settings = {
+      ...S.settings, ...v,
+      support: { ...S.settings.support, ...(v.support || {}) },
+      depositLimits: { ...S.settings.depositLimits, ...(v.depositLimits || {}) },
+      withdrawLimits: { ...S.settings.withdrawLimits, ...(v.withdrawLimits || {}) },
+    };
+    if (!isHttps(S.settings.support.url)) S.settings.support.enabled = false;
+    S.settingsLoaded = true;
+    render();
+  }, (err) => {
+    console.warn("Settings read error:", err);
+    S.settingsLoaded = true;
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeMarkets() {
+  const r = ref(db, "markets");
+  const unsub = onValue(r, (snap) => {
+    S.markets = snap.val() || {};
+    render();
+  }, (err) => console.warn("Markets read error:", err));
+  S.unsubs.push(unsub);
+}
+
+function subscribeNotifications(uid) {
+  const r = query(ref(db, `notifications/${uid}`), limitToLast(100));
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || {};
+    S.notifications = Object.entries(v)
+      .map(([id, n]) => ({ id, ...n }))
+      .sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeWallet(uid) {
+  const r = ref(db, `wallets/${uid}`);
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || { balance: 0, currency: "USD" };
+    S.wallet = v;
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeTrades(uid) {
+  const r = query(ref(db, `trades/${uid}`), limitToLast(100));
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || {};
+    S.trades = Object.entries(v)
+      .map(([id, t]) => ({ id, ...t }))
+      .sort((a,b) => (b.startTime||0) - (a.startTime||0));
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeDeposits(uid) {
+  const r = query(ref(db, `deposits/${uid}`), limitToLast(50));
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || {};
+    S.deposits = Object.entries(v)
+      .map(([id, d]) => ({ id, ...d }))
+      .sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeWithdrawals(uid) {
+  const r = query(ref(db, `withdrawals/${uid}`), limitToLast(50));
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || {};
+    S.withdrawals = Object.entries(v)
+      .map(([id, d]) => ({ id, ...d }))
+      .sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeTutorials() {
+  const r = ref(db, "tutorials");
+  const unsub = onValue(r, (snap) => {
+    const v = snap.val() || {};
+    S.tutorials = Object.entries(v)
+      .map(([id, t]) => ({ id, ...t }))
+      .filter(t => t.enabled !== false)
+      .sort((a,b) => (a.sortOrder||0) - (b.sortOrder||0));
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribePaymentMethods() {
+  const r = ref(db, "paymentMethods");
+  const unsub = onValue(r, (snap) => {
+    S.settings.paymentMethods = snap.val() || {};
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeConnection() {
+  const r = ref(db, ".info/connected");
+  const unsub = onValue(r, (snap) => {
+    S.connection = !!snap.val();
+    renderConnBanner();
+  });
+  S.unsubs.push(unsub);
+}
+
+function subscribeProfile(uid) {
+  const r = ref(db, `users/${uid}/profile`);
+  const unsub = onValue(r, (snap) => {
+    S.profile = snap.val() ? { ...snap.val(), userId: uid } : null;
+    S.authLoaded = true;
+    render();
+  });
+  S.unsubs.push(unsub);
+}
+
+function teardownSubs() {
+  S.unsubs.forEach(u => { try { u(); } catch {} });
+  S.unsubs = [];
+}
+
+/* ---------- Auth Functions ---------- */
+const genReferralId = () => {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let out = "OLIM";
+  for (let i = 0; i < 6; i++) out += chars[Math.floor(Math.random()*chars.length)];
+  return out;
+};
+
+async function doSignup({ name, phone, email, password, referral }) {
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  const uid = cred.user.uid;
+  try { await updateProfile(cred.user, { displayName: name }); } catch {}
+
+  let referredBy = null;
+  if (referral && referral.trim()) {
+    const idx = await get(ref(db, `referralIndex/${referral.trim().toUpperCase()}`));
+    if (idx.exists()) {
+      const found = idx.val();
+      if (found?.userId && found.userId !== uid) referredBy = found.userId;
     }
+  }
+
+  const referralId = genReferralId();
+  const profile = {
+    userId: uid, name, phone, email, referralId,
+    referredBy: referredBy || null,
+    accountStatus: "active", emailVerified: false,
+    createdAt: nowMs(), role: "user"
+  };
+  await set(ref(db, `users/${uid}/profile`), profile);
+  await set(ref(db, `referralIndex/${referralId}`), { userId: uid, referralId });
+  await set(ref(db, `wallets/${uid}`), { balance: 0, currency: "USD", updatedAt: nowMs() });
+
+  if (referredBy) {
+    await set(ref(db, `referrals/${referredBy}/${uid}`), {
+      referredUserId: uid, createdAt: nowMs(), reward: 0, status: "active"
+    });
+  }
+
+  try { await sendEmailVerification(cred.user); } catch {}
+  S.profile = profile;
+}
+
+async function doLogin(email, password) {
+  await signInWithEmailAndPassword(auth, email, password);
+}
+
+async function doLogout() {
+  await signOut(auth);
+}
+
+async function sendVerify() {
+  if (auth.currentUser) await sendEmailVerification(auth.currentUser);
+}
+
+async function refreshVerification() {
+  if (!auth.currentUser) return false;
+  await auth.currentUser.reload();
+  const verified = auth.currentUser.emailVerified;
+  if (S.user) await update(ref(db, `users/${S.user.uid}/profile`), { emailVerified: verified });
+  return verified;
+}
+
+async function resetByPhone(phone) {
+  try {
+    const r = ref(db, "phoneIndex");
+    const snap = await get(r);
+    if (snap.exists()) {
+      const entries = Object.values(snap.val());
+      const found = entries.find(e => e?.phone === phone.trim());
+      if (found?.email) await sendPasswordResetEmail(auth, found.email);
+    }
+  } catch {}
+}
+
+/* ---------- Auth state binding ---------- */
+onAuthStateChanged(auth, async (u) => {
+  teardownSubs();
+  subscribeSettings();
+  subscribeMarkets();
+  subscribeTutorials();
+  subscribePaymentMethods();
+  subscribeConnection();
+
+  S.user = u;
+  S.authLoaded = true;
+
+  if (u) {
+    S.guest = false;
+    subscribeProfile(u.uid);
+    subscribeWallet(u.uid);
+    subscribeTrades(u.uid);
+    subscribeDeposits(u.uid);
+    subscribeWithdrawals(u.uid);
+    subscribeNotifications(u.uid);
+  } else {
+    S.profile = null;
+    S.wallet = { balance: 0, currency: "USD" };
+    S.trades = []; S.deposits = []; S.withdrawals = [];
+    S.notifications = [];
+    S.activeTrade = null;
+  }
+  render();
+});
+
+/* ---------- Trade ---------- */
+const DEMO_MARKET_PRICES = {
+  "EUR/USD": 1.1023, "GBP/USD": 1.2650, "USD/JPY": 149.85, "AUD/USD": 0.6580,
+  "NZD/USD": 0.6020, "USD/CAD": 1.3650, "USD/CHF": 0.8850, "EUR/GBP": 0.8715,
+  "EUR/JPY": 165.20, "GBP/JPY": 189.55, "BTC/USD": 67500, "ETH/USD": 3250,
+  "LTC/USD": 82.5, "XRP/USD": 0.6250, "SOL/USD": 165.5, "XAU/USD": 2650.00,
+  "XAG/USD": 31.50, "CRUDE OIL": 78.50, "BRENT OIL": 82.30, "NATURAL GAS": 2.85,
+  "S&P 500": 5750.00, "NASDAQ 100": 20150.00, "DOW JONES": 42300.00,
+};
+
+const CATEGORY_FALLBACK = {
+  "BTC/USD":"CRYPTO","ETH/USD":"CRYPTO","LTC/USD":"CRYPTO","XRP/USD":"CRYPTO","SOL/USD":"CRYPTO",
+  "XAU/USD":"COMMODITIES","XAG/USD":"COMMODITIES","CRUDE OIL":"COMMODITIES","BRENT OIL":"COMMODITIES","NATURAL GAS":"COMMODITIES",
+  "S&P 500":"INDICES","NASDAQ 100":"INDICES","DOW JONES":"INDICES",
+};
+
+function getMarketList() {
+  const fromDB = Object.entries(S.markets || {}).map(([key, m]) => ({
+    key, name: m.name || key, category: m.category || CATEGORY_FALLBACK[key] || "FOREX",
+    enabled: m.enabled !== false, displayOrder: m.displayOrder || 999,
+  }));
+  if (fromDB.length === 0) {
+    return Object.keys(DEMO_MARKET_PRICES).map((k,i) => ({
+      key: k.replace(/\s+/g,"_").replace(/\//g,"_"), name: k,
+      category: CATEGORY_FALLBACK[k] || "FOREX", enabled: true, displayOrder: i,
+    }));
+  }
+  return fromDB.filter(m => m.enabled).sort((a,b) => a.displayOrder - b.displayOrder);
+}
+
+function marketPrice(symbol) {
+  const base = DEMO_MARKET_PRICES[symbol] ?? 100;
+  const t = Date.now() / 5000;
+  const noise = Math.sin(t + symbol.length) * 0.0015 + (Math.random() - 0.5) * 0.0008;
+  return base * (1 + noise);
+}
+
+async function placeTrade({ marketSymbol, direction, amount, durationSec }) {
+  if (!S.user) { nav("login"); return; }
+  if (!S.connection) { toast("Connection lost. Please check your internet connection.", "error"); return; }
+  const bal = Number(S.wallet.balance || 0);
+  const amt = Number(amount);
+  if (!amt || amt <= 0) { toast("Invalid Amount", "error"); return; }
+  if (amt > bal) { toast("Insufficient Balance", "error"); return; }
+  if (amt < 1) { toast("Minimum trade is $1", "error"); return; }
+
+  const entry = marketPrice(marketSymbol);
+  const tradeId = push(child(ref(db), `trades/${S.user.uid}`)).key;
+  const startTime = nowMs();
+  const endTime = startTime + durationSec * 1000;
+
+  const trade = {
+    tradeId, userId: S.user.uid, email: S.user.email,
+    market: marketSymbol, direction, amount: amt, duration: durationSec,
+    entryPrice: entry, startTime, endTime, status: "active",
+    payoutRate: 0.7, mode: "demo"
+  };
+
+  await set(ref(db, `trades/${S.user.uid}/${tradeId}`), trade);
+
+  const newBalance = +(bal - amt).toFixed(2);
+  await update(ref(db, `wallets/${S.user.uid}`), { balance: newBalance, updatedAt: nowMs() });
+  await set(ref(db, `walletLedger/${S.user.uid}/${tradeId}_debit`), {
+    transactionId: tradeId + "_debit", userId: S.user.uid, amount: -amt, currency: "USD",
+    type: "TRADE_DEBIT", source: "trade", referenceId: tradeId, createdAt: nowMs()
+  });
+
+  S.activeTrade = trade;
+  pushNotification(S.user.uid, "Trade Started", `${marketSymbol} ${direction} $${amt}`, "trade", "/trade");
+  scheduleTradeResolve(trade);
+  nav("trade");
+}
+
+function scheduleTradeResolve(trade) {
+  const remain = trade.endTime - nowMs();
+  if (remain <= 0) { resolveTrade(trade); return; }
+  setTimeout(() => resolveTrade(trade), remain + 400);
+}
+
+async function resolveTrade(trade) {
+  const exit = marketPrice(trade.market);
+  const win = (trade.direction === "UP" && exit > trade.entryPrice) ||
+              (trade.direction === "DOWN" && exit < trade.entryPrice);
+  const payout = win ? +(trade.amount * (1 + (trade.payoutRate||0.7))).toFixed(2) : 0;
+  const profit = win ? +(trade.amount * (trade.payoutRate||0.7)).toFixed(2) : -trade.amount;
+
+  await update(ref(db, `trades/${trade.userId}/${trade.tradeId}`), {
+    exitPrice: exit, status: "completed", result: win ? "PROFIT" : "LOSS",
+    profit, payout, resolvedAt: nowMs()
+  });
+
+  if (win) {
+    const walletSnap = await get(ref(db, `wallets/${trade.userId}`));
+    const curBal = Number(walletSnap.val()?.balance || 0);
+    const newBal = +(curBal + payout).toFixed(2);
+    await update(ref(db, `wallets/${trade.userId}`), { balance: newBal, updatedAt: nowMs() });
+    await set(ref(db, `walletLedger/${trade.userId}/${trade.tradeId}_credit`), {
+      transactionId: trade.tradeId + "_credit", userId: trade.userId, amount: payout,
+      currency: "USD", type: "TRADE_PROFIT", source: "trade", referenceId: trade.tradeId, createdAt: nowMs()
+    });
+  }
+
+  pushNotification(
+    trade.userId,
+    win ? "Trade Completed — Profit 🎉" : "Trade Completed — Loss",
+    `${trade.market} ${trade.direction} $${trade.amount} → ${win ? "+$" + profit : "-$" + trade.amount}`,
+    "trade", "/history"
+  );
+
+  if (S.activeTrade?.tradeId === trade.tradeId) S.activeTrade = null;
+  render();
+}
+
+async function pushNotification(uid, title, message, category, url) {
+  try {
+    const id = push(child(ref(db), `notifications/${uid}`)).key;
+    await set(ref(db, `notifications/${uid}/${id}`), {
+      notificationId: id, userId: uid, title, message, category,
+      url: url || null, read: false, createdAt: nowMs()
+    });
+  } catch (e) { console.warn("Push notification failed:", e); }
+}
+
+/* ---------- Deposit ---------- */
+async function submitDeposit({ usdAmount, bdtAmount, rate, method, transactionId, screenshotFile }) {
+  if (!S.user) { nav("login"); return; }
+  if (!transactionId || transactionId.trim().length < 4) { toast("Invalid Payment Reference", "error"); return; }
+
+  let screenshotUrl = null;
+  if (screenshotFile) {
+    try {
+      const path = `deposits/${S.user.uid}/${nowMs()}_${screenshotFile.name}`;
+      const sref = sRef(storage, path);
+      await uploadBytes(sref, screenshotFile);
+      screenshotUrl = await getDownloadURL(sref);
+    } catch (e) { console.warn("Upload failed:", e); }
+  }
+
+  const depId = push(child(ref(db), `deposits/${S.user.uid}`)).key;
+  const deposit = {
+    depositId: depId, userId: S.user.uid, email: S.user.email,
+    usdAmount, bdtAmount, rate, paymentMethod: method,
+    transactionId, screenshot: screenshotUrl, status: "Pending", createdAt: nowMs()
+  };
+  await set(ref(db, `deposits/${S.user.uid}/${depId}`), deposit);
+  await set(ref(db, `adminDepositQueue/${depId}`), {
+    depositId: depId, userId: S.user.uid, email: S.user.email,
+    usdAmount, bdtAmount, paymentMethod: method, transactionId, status: "Pending", createdAt: nowMs()
+  });
+
+  pushNotification(S.user.uid, "Deposit Request Received", `Your $${usdAmount} deposit is pending review.`, "deposit", "/wallet");
+}
+
+/* ---------- Withdrawal ---------- */
+async function submitWithdrawal({ usdAmount, method, number }) {
+  if (!S.user) { nav("login"); return; }
+  const bal = Number(S.wallet.balance || 0);
+  if (usdAmount > bal) { toast("Insufficient Balance", "error"); return; }
+  if (usdAmount < (S.settings.withdrawLimits?.min || 1)) { toast(`Min withdrawal $${S.settings.withdrawLimits?.min || 1}`, "error"); return; }
+  if (usdAmount > (S.settings.withdrawLimits?.max || 350)) { toast(`Max withdrawal $${S.settings.withdrawLimits?.max || 350}`, "error"); return; }
+  if (!number || number.trim().length < 6) { toast("Invalid payment number", "error"); return; }
+
+  const wdId = push(child(ref(db), `withdrawals/${S.user.uid}`)).key;
+  const bdtAmount = usdAmount * (S.settings.withdrawRate || 125);
+  const withdrawal = {
+    withdrawalId: wdId, userId: S.user.uid, email: S.user.email,
+    usdAmount, bdtAmount, rate: S.settings.withdrawRate || 125,
+    paymentMethod: method, paymentNumber: number, status: "Pending", createdAt: nowMs()
+  };
+  await set(ref(db, `withdrawals/${S.user.uid}/${wdId}`), withdrawal);
+  await set(ref(db, `adminWithdrawQueue/${wdId}`), {
+    withdrawalId: wdId, userId: S.user.uid, email: S.user.email,
+    usdAmount, bdtAmount, paymentMethod: method, status: "Pending", createdAt: nowMs()
+  });
+
+  pushNotification(S.user.uid, "Withdrawal Request Received", `Your $${usdAmount} withdrawal is pending review.`, "withdrawal", "/wallet");
+}
+
+/* ---------- Verification ---------- */
+async function submitNID(data) {
+  if (!S.user) { nav("login"); return; }
+  const id = push(child(ref(db), `verificationRequests/${S.user.uid}`)).key;
+  const record = { ...data, requestId: id, userId: S.user.uid, type: "NID", status: "Pending", createdAt: nowMs() };
+  await set(ref(db, `verificationRequests/${S.user.uid}/${id}`), record);
+  await set(ref(db, `adminVerificationQueue/${id}`), {
+    requestId: id, userId: S.user.uid, email: S.user.email, type: "NID",
+    nidName: data.nidName, nidNumber: data.nidNumber, status: "Pending", createdAt: nowMs()
+  });
+  pushNotification(S.user.uid, "Verification Submitted", "Your NID verification is pending review.", "verification", "/verification");
+}
+
+/* ---------- Render ---------- */
+function renderConnBanner() {
+  let el = $("#conn-banner");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "conn-banner";
+    document.body.appendChild(el);
+  }
+  if (S.connection) {
+    el.className = "conn-banner conn-online";
+    el.textContent = "Firebase Connected";
+    el.style.display = "block"; el.style.opacity = "1";
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.style.opacity = "0"; setTimeout(()=>el.style.display="none", 300); }, 1800);
+  } else {
+    el.className = "conn-banner conn-offline";
+    el.textContent = "Firebase Disconnected — Reconnecting…";
+    el.style.display = "block"; el.style.opacity = "1";
+    clearTimeout(el._t);
+  }
+}
+
+let renderScheduled = false;
+function render() {
+  if (renderScheduled) return;
+  renderScheduled = true;
+  requestAnimationFrame(() => {
+    renderScheduled = false;
+    renderNow();
+  });
+}
+
+function renderNow() {
+  const root = $("#root");
+  if (!root) return;
+
+  // Splash only if BOTH not loaded
+  if (!S.settingsLoaded && !S.authLoaded) {
+    root.innerHTML = `
+      <div class="splash">
+        <div class="splash-logo">OL</div>
+        <div style="text-align:center">
+          <div class="fs-20 fw-800">${esc(S.settings.appName)}</div>
+          <div class="fs-13 text-dim mt-2">${esc(S.settings.tagline)}</div>
+        </div>
+        <div class="spinner" style="margin-top:20px"></div>
+      </div>`;
+    return;
+  }
+
+  if (S.settings.maintenanceMode && (!S.profile || S.profile.role !== "admin")) {
+    root.innerHTML = `
+      <div class="app-shell">
+        <div class="auth-wrap">
+          <div class="auth-card text-center">
+            <div style="font-size:56px;margin-bottom:12px">🛠️</div>
+            <div class="fs-20 fw-800 mb-2">Under Maintenance</div>
+            <div class="text-dim fs-14 mb-4">${esc(S.settings.appName)} is currently under maintenance. Please try again shortly.</div>
+            ${S.settings.support.enabled ? `<button class="btn btn-primary btn-block" onclick="window.__olim_openSupport()">💬 ${esc(S.settings.support.title)}</button>` : ""}
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const route = S.currentRoute;
+  if (route === "login" || route === "signup" || route === "forgot") {
+    root.innerHTML = renderAuth(route);
+    return;
+  }
+  if (route === "verifyEmail") {
+    root.innerHTML = renderVerifyEmail();
+    return;
+  }
+
+  const page = renderPage(route);
+  root.innerHTML = `
+    <div class="app-shell">
+      ${renderHeader()}
+      ${S.guest ? `<div style="max-width:var(--content-max);margin:0 auto;padding:12px 16px 0;width:100%"><div class="guest-banner"><span>👤 Browsing as Guest</span><button class="btn btn-ghost" style="padding:6px 12px;min-height:auto;font-size:12px" onclick="window.__olim_nav('login')">Login</button></div></div>` : ""}
+      ${page}
+      ${renderBottomNav()}
+      ${S.settings.support.enabled && ["home","wallet","deposit","withdraw","verification","profile","tutorials"].includes(route)
+        ? `<button class="support-fab" onclick="window.__olim_openSupport()">💬 ${esc(S.settings.support.title || "Support")}</button>` : ""}
+    </div>`;
+
+  // Draw chart if trade page
+  requestAnimationFrame(() => {
+    if (S.currentRoute === "trade" && !S.activeTrade && S.user && $("#trade-chart")) {
+      drawTradeChart();
+    }
+  });
+}
+
+function renderHeader() {
+  const unread = S.notifications.filter(n => !n.read).length;
+  return `
+    <div class="app-header">
+      <div class="app-header-inner">
+        <div class="logo">
+          <div class="logo-mark">OL</div>
+          <div class="logo-text">
+            <div class="logo-name">${esc(S.settings.appName)}</div>
+            <div class="logo-tag">${esc(S.settings.tagline)}</div>
+          </div>
+        </div>
+        <div class="row" style="gap:4px">
+          ${S.user ? `
+            <button class="bell" onclick="window.__olim_nav('notifications')" aria-label="Notifications">
+              🔔 ${unread > 0 ? `<span class="bell-badge">${unread > 99 ? "99+" : unread}</span>` : ""}
+            </button>
+          ` : `
+            <button class="btn btn-ghost" style="padding:8px 14px;font-size:12px" onclick="window.__olim_nav('login')">Login</button>
+          `}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderBottomNav() {
+  const tabs = [
+    { id: "home", icon: "🏠", label: "Home" },
+    { id: "trade", icon: "📈", label: "Trade" },
+    { id: "wallet", icon: "💰", label: "Wallet" },
+    { id: "history", icon: "📋", label: "History" },
+    { id: "profile", icon: "👤", label: "Profile" },
+  ];
+  return `
+    <div class="bottom-nav">
+      <div class="bottom-nav-inner">
+        ${tabs.map(t => `
+          <button class="nav-item ${S.currentRoute === t.id ? "active" : ""}" onclick="window.__olim_nav('${t.id}')" aria-label="${t.label}">
+            <span class="nav-icon">${t.icon}</span>
+            <span>${t.label}</span>
+          </button>`).join("")}
+      </div>
+    </div>`;
+}
+
+function renderPage(route) {
+  switch (route) {
+    case "home": return renderHome();
+    case "trade": return renderTradePage();
+    case "wallet": return renderWallet();
+    case "deposit": return renderDeposit();
+    case "withdraw": return renderWithdraw();
+    case "history": return renderHistory();
+    case "profile": return renderProfile();
+    case "verification": return renderVerification();
+    case "tutorials": return renderTutorials();
+    case "notifications": return renderNotifications();
+    case "referral": return renderReferral();
+    case "markets": return renderMarkets();
+    default: return renderHome();
+  }
+}
+
+/* ---------- Home ---------- */
+function renderHome() {
+  const unread = S.notifications.filter(n => !n.read).length;
+  return `
+    <div class="page">
+      <div class="hero-balance">
+        <div class="balance-lbl">Available Balance</div>
+        <div class="balance-amt mt-2">${S.user ? fmtUSD(S.wallet.balance) : "$0.00"}</div>
+        <div class="quick-actions">
+          <button class="qa-btn" onclick="window.__olim_nav('deposit')"><span class="qa-icon">⬇️</span>Deposit</button>
+          <button class="qa-btn" onclick="window.__olim_nav('withdraw')"><span class="qa-icon">⬆️</span>Withdraw</button>
+          <button class="qa-btn" onclick="window.__olim_nav('trade')"><span class="qa-icon">📈</span>Trade</button>
+          <button class="qa-btn" onclick="window.__olim_nav('referral')"><span class="qa-icon">🎁</span>Refer</button>
+        </div>
+      </div>
+
+      <div class="quick-grid mt-4">
+        <div class="tile" onclick="window.__olim_nav('markets')"><span class="tile-icon">🌍</span>Markets</div>
+        <div class="tile" onclick="window.__olim_nav('referral')"><span class="tile-icon">🎁</span>Referral</div>
+        <div class="tile" onclick="window.__olim_nav('verification')"><span class="tile-icon">🛡️</span>Verify</div>
+        <div class="tile" onclick="window.__olim_nav('tutorials')"><span class="tile-icon">📚</span>Tutorials</div>
+        <div class="tile" onclick="window.__olim_nav('notifications')"><span class="tile-icon">🔔</span>Alerts ${unread>0?`<span class="badge badge-info" style="margin-left:4px">${unread}</span>`:""}</div>
+        <div class="tile" onclick="window.__olim_nav('wallet')"><span class="tile-icon">💰</span>Wallet</div>
+        <div class="tile" onclick="window.__olim_nav('history')"><span class="tile-icon">📋</span>History</div>
+        ${S.settings.support.enabled ? `<div class="tile" onclick="window.__olim_openSupport()"><span class="tile-icon">💬</span>Support</div>` : ""}
+      </div>
+
+      <div class="card mt-4">
+        <div class="row-between mb-3">
+          <div class="fw-700">🔥 Top Markets</div>
+          <button class="btn btn-ghost" style="padding:6px 12px;min-height:auto;font-size:12px" onclick="window.__olim_nav('markets')">View All</button>
+        </div>
+        <div class="col" style="gap:0">
+          ${getMarketList().slice(0,5).map(m => {
+            const p = marketPrice(m.name);
+            const base = DEMO_MARKET_PRICES[m.name] || p;
+            const chg = ((p - base) / base * 100);
+            return `
+              <div class="market-item" onclick="window.__olim_openMarket('${esc(m.name)}')">
+                <div>
+                  <div class="market-symbol">${esc(m.name)}</div>
+                  <div class="market-cat">${esc(m.category)}</div>
+                </div>
+                <div>
+                  <div class="market-price">${p < 10 ? p.toFixed(5) : p.toFixed(2)}</div>
+                  <div class="market-change ${chg >= 0 ? "text-profit" : "text-loss"}">${chg >= 0 ? "▲" : "▼"} ${Math.abs(chg).toFixed(2)}%</div>
+                </div>
+              </div>`;
+          }).join("")}
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="row-between mb-3">
+          <div class="fw-700">🤖 AI Market Analysis</div>
+          <span class="badge badge-mute">Demo</span>
+        </div>
+        <div class="alert alert-warn">AI analysis is informational and does not guarantee future results.</div>
+        <div class="mt-3 fs-13 text-dim">
+          <div class="row-between" style="padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>EUR/USD</span><span class="text-profit">Uptrend ▲</span>
+          </div>
+          <div class="row-between" style="padding:8px 0;border-bottom:1px solid var(--border)">
+            <span>BTC/USD</span><span class="text-loss">Downtrend ▼</span>
+          </div>
+          <div class="row-between" style="padding:8px 0">
+            <span>XAU/USD</span><span class="text-warn">Sideways ◆</span>
+          </div>
+        </div>
+      </div>
+
+      ${S.user && !auth.currentUser?.emailVerified ? `
+        <div class="card mt-4 alert alert-info">
+          <div class="fw-700 mb-2">✉️ Verify your email</div>
+          <div class="fs-13">Please verify <b>${esc(S.user.email)}</b> to unlock all features.</div>
+          <button class="btn btn-primary mt-3" onclick="window.__olim_nav('verifyEmail')">Verify Now</button>
+        </div>
+      ` : ""}
+    </div>`;
+}
+
+/* ---------- Markets ---------- */
+let marketCategory = "ALL";
+function renderMarkets() {
+  const list = getMarketList();
+  const cats = ["ALL", ...Array.from(new Set(list.map(m => m.category)))];
+  const filtered = marketCategory === "ALL" ? list : list.filter(m => m.category === marketCategory);
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">🌍 Markets</div>
+        <span class="mode-tag">DEMO / SIMULATION</span>
+      </div>
+      <div class="cat-tabs mb-3">
+        ${cats.map(c => `<button class="cat-tab ${marketCategory===c?"active":""}" onclick="window.__olim_setCat('${esc(c)}')">${esc(c)}</button>`).join("")}
+      </div>
+      <div class="card" style="padding:0">
+        ${filtered.length === 0 ? `<div class="empty"><div class="empty-icon">📊</div>No markets available</div>` :
+          filtered.map(m => {
+            const p = marketPrice(m.name);
+            const base = DEMO_MARKET_PRICES[m.name] || p;
+            const chg = ((p - base) / base * 100);
+            return `
+              <div class="market-item" onclick="window.__olim_openMarket('${esc(m.name)}')">
+                <div>
+                  <div class="market-symbol">${esc(m.name)}</div>
+                  <div class="market-cat">${esc(m.category)}</div>
+                </div>
+                <div>
+                  <div class="market-price">${p < 10 ? p.toFixed(5) : p.toFixed(2)}</div>
+                  <div class="market-change ${chg >= 0 ? "text-profit" : "text-loss"}">${chg >= 0 ? "▲" : "▼"} ${Math.abs(chg).toFixed(2)}%</div>
+                </div>
+              </div>`;
+          }).join("")}
+      </div>
+    </div>`;
+}
+
+/* ---------- Trade ---------- */
+let tradeState = { market: "EUR/USD", amount: 1, duration: 60 };
+let priceHistory = [];
+
+function renderTradePage() {
+  if (S.activeTrade) return renderActiveTrade(S.activeTrade);
+  if (!S.user) return renderGuestTrade();
+
+  const market = tradeState.market;
+  const price = marketPrice(market);
+  const bal = Number(S.wallet.balance || 0);
+  const maxTrade = Math.min(bal, 100);
+  const durations = (S.settings.durations || []).filter(d => d.enabled);
+  const presets = [1,3,5,10,25,50,75,100];
+
+  priceHistory.push({ t: nowMs(), p: price });
+  priceHistory = priceHistory.filter(x => nowMs() - x.t < 60000);
+
+  const canTrade = bal >= 1 && tradeState.amount <= bal;
+
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">📈 Trade</div>
+        <span class="mode-tag">DEMO / SIMULATION</span>
+      </div>
+
+      ${bal < 1 ? `
+        <div class="card alert alert-warn mb-3">
+          <div class="fw-700">Insufficient Balance</div>
+          <div class="fs-13 mt-2">You need at least $1 to place a trade.</div>
+          <button class="btn btn-primary mt-3" onclick="window.__olim_nav('deposit')">Deposit Now</button>
+        </div>
+      ` : ""}
+
+      <div class="card mb-3">
+        <label class="label">Market</label>
+        <select class="select" onchange="window.__olim_setTradeMarket(this.value)">
+          ${getMarketList().map(m => `<option value="${esc(m.name)}" ${m.name===market?"selected":""}>${esc(m.name)} · ${esc(m.category)}</option>`).join("")}
+        </select>
+      </div>
+
+      <div class="card mb-3">
+        <div class="row-between mb-2">
+          <div class="fw-700">${esc(market)}</div>
+          <div class="fs-12 text-dim">Live simulated</div>
+        </div>
+        <div class="chart-box">
+          <canvas id="trade-chart"></canvas>
+        </div>
+        <div class="row-between mt-3">
+          <div>
+            <div class="fs-11 text-dim">Current Price</div>
+            <div class="fs-20 fw-800">${price < 10 ? price.toFixed(5) : price.toFixed(2)}</div>
+          </div>
+          <div class="text-center">
+            <div class="fs-11 text-dim">Balance</div>
+            <div class="fs-16 fw-700">${fmtUSD(bal)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Amount (USD) — Min $1, Max $${maxTrade.toFixed(0)}</label>
+        <div class="amount-presets mb-3">
+          ${presets.map(p => `<button class="preset-btn ${tradeState.amount===p?"active":""}" onclick="window.__olim_setTradeAmount(${p})" ${p>bal?"disabled":""}>$${p}</button>`).join("")}
+        </div>
+        <input class="input" type="number" min="1" step="1" value="${tradeState.amount}" onchange="window.__olim_setTradeAmount(this.value)" placeholder="Custom amount" />
+        ${tradeState.amount > bal ? `<div class="fs-12 text-loss mt-2">Insufficient Balance</div>` : ""}
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Duration</label>
+        <div class="grid-4">
+          ${durations.map(d => `<button class="preset-btn ${tradeState.duration===d.seconds?"active":""}" onclick="window.__olim_setTradeDuration(${d.seconds})">${fmtDur(d.seconds)}</button>`).join("")}
+        </div>
+      </div>
+
+      <div class="row" style="gap:12px">
+        <button class="trade-btn up" ${!canTrade?"disabled":""} onclick="window.__olim_placeTrade('UP')">
+          ⬆️ UP
+        </button>
+        <button class="trade-btn down" ${!canTrade?"disabled":""} onclick="window.__olim_placeTrade('DOWN')">
+          ⬇️ DOWN
+        </button>
+      </div>
+
+      <div class="fs-11 text-mute text-center mt-3">
+        Trade results resolve at expiry. Simulated prices are not real market data.
+      </div>
+    </div>`;
+}
+
+function renderGuestTrade() {
+  return `
+    <div class="page">
+      <div class="card text-center">
+        <div style="font-size:56px;margin-bottom:12px">🔒</div>
+        <div class="fs-18 fw-700 mb-2">Login Required</div>
+        <div class="text-dim fs-13 mb-4">Please login or create an account to start trading.</div>
+        <div class="row">
+          <button class="btn btn-primary" style="flex:1" onclick="window.__olim_nav('login')">Login</button>
+          <button class="btn btn-ghost" style="flex:1" onclick="window.__olim_nav('signup')">Sign Up</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function fmtDur(s) {
+  if (s < 60) return s + "s";
+  if (s === 60) return "1m";
+  return (s/60) + "m";
+}
+
+function renderActiveTrade(t) {
+  const now = nowMs();
+  const remain = Math.max(0, Math.floor((t.endTime - now) / 1000));
+  const current = marketPrice(t.market);
+  const win = (t.direction === "UP" && current > t.entryPrice) || (t.direction === "DOWN" && current < t.entryPrice);
+
+  return `
+    <div class="page">
+      <div class="card text-center">
+        <div class="fs-12 text-dim">ACTIVE TRADE</div>
+        <div class="fs-24 fw-800 mt-2">${esc(t.market)}</div>
+        <div class="mt-3">
+          <span class="badge ${t.direction==="UP"?"badge-approved":"badge-rejected"}" style="font-size:14px;padding:6px 14px">${t.direction==="UP"?"⬆️ UP":"⬇️ DOWN"}</span>
+        </div>
+
+        <div class="countdown-ring mt-4">
+          <div class="countdown-val" id="trade-count">${remain}</div>
+        </div>
+        <div class="fs-12 text-dim mt-2">Seconds remaining</div>
+
+        <div class="grid-2 mt-4">
+          <div class="card card-tight text-center">
+            <div class="fs-11 text-dim">Amount</div>
+            <div class="fs-16 fw-700">${fmtUSD(t.amount)}</div>
+          </div>
+          <div class="card card-tight text-center">
+            <div class="fs-11 text-dim">Duration</div>
+            <div class="fs-16 fw-700">${fmtDur(t.duration)}</div>
+          </div>
+          <div class="card card-tight text-center">
+            <div class="fs-11 text-dim">Entry</div>
+            <div class="fs-14 fw-700">${t.entryPrice < 10 ? t.entryPrice.toFixed(5) : t.entryPrice.toFixed(2)}</div>
+          </div>
+          <div class="card card-tight text-center">
+            <div class="fs-11 text-dim">Current</div>
+            <div class="fs-14 fw-700 ${win?"text-profit":"text-loss"}">${current < 10 ? current.toFixed(5) : current.toFixed(2)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3 text-center">
+        <div class="fs-12 text-dim">Potential Payout</div>
+        <div class="fs-24 fw-800 text-profit mt-2">+${fmtUSD(t.amount * (1 + (t.payoutRate||0.7)))}</div>
+      </div>
+
+      <div class="alert alert-warn mt-3 fs-12">Do not close this page. Trade will resolve automatically at expiry.</div>
+    </div>`;
+}
+
+/* ---------- Wallet ---------- */
+function renderWallet() {
+  if (!S.user) return renderGuestTrade();
+  const depTotal = S.deposits.filter(d => d.status === "Approved").reduce((s,d) => s + (d.usdAmount||0), 0);
+  const wdTotal = S.withdrawals.filter(w => ["Approved","Processing"].includes(w.status)).reduce((s,w) => s + (w.usdAmount||0), 0);
+
+  return `
+    <div class="page">
+      <div class="fs-20 fw-800 mb-3">💰 Wallet</div>
+
+      <div class="hero-balance">
+        <div class="balance-lbl">Available Balance</div>
+        <div class="balance-amt mt-2">${fmtUSD(S.wallet.balance)}</div>
+        <div class="row mt-4" style="gap:8px">
+          <button class="btn btn-profit" style="flex:1" onclick="window.__olim_nav('deposit')">⬇️ Deposit</button>
+          <button class="btn btn-loss" style="flex:1" onclick="window.__olim_nav('withdraw')">⬆️ Withdraw</button>
+        </div>
+      </div>
+
+      <div class="grid-2 mt-4">
+        <div class="card text-center">
+          <div class="fs-11 text-dim">Total Deposited</div>
+          <div class="fs-18 fw-700 text-profit">${fmtUSD(depTotal)}</div>
+        </div>
+        <div class="card text-center">
+          <div class="fs-11 text-dim">Total Withdrawn</div>
+          <div class="fs-18 fw-700 text-warn">${fmtUSD(wdTotal)}</div>
+        </div>
+      </div>
+
+      <div class="card mt-4" style="padding:0">
+        <div class="row-between" style="padding:14px 16px;border-bottom:1px solid var(--border)">
+          <div class="fw-700">📥 Deposit History</div>
+          <div class="fs-12 text-dim">${S.deposits.length}</div>
+        </div>
+        ${S.deposits.length === 0 ? `<div class="empty"><div class="empty-icon">📥</div>No deposits yet</div>` :
+          S.deposits.slice(0,5).map(d => renderTxRow(d, "deposit")).join("")}
+      </div>
+
+      <div class="card mt-4" style="padding:0">
+        <div class="row-between" style="padding:14px 16px;border-bottom:1px solid var(--border)">
+          <div class="fw-700">📤 Withdrawal History</div>
+          <div class="fs-12 text-dim">${S.withdrawals.length}</div>
+        </div>
+        ${S.withdrawals.length === 0 ? `<div class="empty"><div class="empty-icon">📤</div>No withdrawals yet</div>` :
+          S.withdrawals.slice(0,5).map(w => renderTxRow(w, "withdrawal")).join("")}
+      </div>
+    </div>`;
+}
+
+function renderTxRow(tx, kind) {
+  const status = (tx.status || "Pending").toLowerCase();
+  const badgeClass = status === "approved" ? "badge-approved" : status === "rejected" ? "badge-rejected" : status === "processing" ? "badge-processing" : "badge-pending";
+  const date = new Date(tx.createdAt || Date.now()).toLocaleString();
+  const label = kind === "deposit" ? "Deposit" : "Withdrawal";
+  const amt = `$${Number(tx.usdAmount||0).toFixed(2)}`;
+
+  return `
+    <div class="list-item">
+      <div class="row-between">
+        <div>
+          <div class="fw-600 fs-14">${label} · ${amt}</div>
+          <div class="fs-11 text-mute">${esc(tx.paymentMethod || "")} · ${esc(date)}</div>
+          ${tx.transactionId ? `<div class="fs-11 text-mute">Ref: ${esc(tx.transactionId)}</div>` : ""}
+          ${tx.rejectionReason ? `<div class="fs-11 text-loss mt-1">Reason: ${esc(tx.rejectionReason)}</div>` : ""}
+        </div>
+        <span class="badge ${badgeClass}">${esc(tx.status || "Pending")}</span>
+      </div>
+    </div>`;
+}
+
+/* ---------- Deposit ---------- */
+let depositState = { usd: 10, method: "bkash" };
+
+function renderDeposit() {
+  if (!S.user) return renderGuestTrade();
+  const rate = Number(S.settings.depositRate || 128);
+  const bdt = depositState.usd * rate;
+  const presets = S.settings.depositPresets || [1,3,5,10,25,50,100,200];
+  const methods = S.settings.paymentMethods || {};
+  const enabledMethods = Object.entries(methods).filter(([k,m]) => m.enabled !== false && isHttps(m.paymentUrl));
+
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">⬇️ Deposit</div>
+        <button class="btn btn-ghost" style="padding:6px 10px;min-height:auto;font-size:12px" onclick="window.__olim_nav('wallet')">Back</button>
+      </div>
+
+      <div class="card mb-3">
+        <div class="fs-12 text-dim">Deposit Rate</div>
+        <div class="fs-20 fw-800 mt-2">$1 = ৳${rate}</div>
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Select Amount (USD)</label>
+        <div class="amount-presets mb-3">
+          ${presets.slice(0, 16).map(p => `<button class="preset-btn ${depositState.usd===p?"active":""}" onclick="window.__olim_setDeposit(${p})">$${p}</button>`).join("")}
+        </div>
+        <input class="input" type="number" min="1" value="${depositState.usd}" onchange="window.__olim_setDeposit(this.value)" />
+        <div class="row-between mt-3">
+          <div class="fs-13 text-dim">You will pay</div>
+          <div class="fs-18 fw-800 text-profit">${fmtBDT(bdt)}</div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Payment Method</label>
+        ${enabledMethods.length === 0 ? `
+          <div class="alert alert-warn">No payment methods enabled by admin. Please contact support.</div>
+        ` : `
+          <div class="col">
+            ${enabledMethods.map(([k,m]) => `
+              <button class="btn ${depositState.method===k?"btn-primary":"btn-ghost"}" style="justify-content:flex-start;padding:14px" onclick="window.__olim_setMethod('${esc(k)}')">
+                <span style="font-size:18px">${k==="bkash"?"🟣":k==="nagad"?"🟠":"💳"}</span>
+                <span style="flex:1;text-align:left">${esc(m.label || k.toUpperCase())}</span>
+                ${depositState.method===k?"<span>✓</span>":""}
+              </button>`).join("")}
+          </div>
+        `}
+      </div>
+
+      <div class="card mb-3">
+        <div class="fw-700 mb-2">📋 Instructions</div>
+        <div class="fs-13 text-dim">${esc(methods[depositState.method]?.instructions || "Open the payment link below, complete your payment, then enter the transaction ID.")}</div>
+        ${methods[depositState.method]?.paymentUrl && isHttps(methods[depositState.method].paymentUrl) ? `
+          <button class="btn btn-accent btn-block mt-3" onclick="window.open('${esc(methods[depositState.method].paymentUrl)}','_blank','noopener,noreferrer')">
+            🔗 Open Payment Page
+          </button>
+        ` : ""}
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Transaction / Reference ID *</label>
+        <input class="input" id="dep-txid" placeholder="Enter transaction ID" />
+        <label class="label mt-3">Screenshot ${S.settings.requireDepositScreenshot ? "*" : "(optional)"}</label>
+        <input class="input" type="file" id="dep-file" accept="image/*" />
+      </div>
+
+      <button class="btn btn-primary btn-block" id="dep-submit" onclick="window.__olim_submitDeposit()">Submit Deposit Request</button>
+
+      <div class="alert alert-info mt-3 fs-12">
+        Your deposit request has been submitted. If your balance is not updated within 30 minutes, please contact Live Support.
+      </div>
+    </div>`;
+}
+
+async function doSubmitDeposit() {
+  const btn = $("#dep-submit");
+  const txid = ($("#dep-txid")?.value || "").trim();
+  const file = $("#dep-file")?.files?.[0] || null;
+  if (S.settings.requireDepositScreenshot && !file) { toast("Screenshot required", "error"); return; }
+  if (txid.length < 4) { toast("Invalid Payment Reference", "error"); return; }
+
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Submitting…`;
+  try {
+    await submitDeposit({
+      usdAmount: depositState.usd,
+      bdtAmount: depositState.usd * Number(S.settings.depositRate || 128),
+      rate: Number(S.settings.depositRate || 128),
+      method: depositState.method,
+      transactionId: txid,
+      screenshotFile: file,
+    });
+    toast("Deposit request submitted", "success");
+    nav("wallet");
+  } catch (e) {
+    console.error(e);
+    toast(e.message || "Submit failed", "error");
+  } finally {
+    btn.disabled = false; btn.innerHTML = "Submit Deposit Request";
+  }
+}
+
+/* ---------- Withdraw ---------- */
+let wdState = { usd: 1, method: "bkash", number: "" };
+
+function renderWithdraw() {
+  if (!S.user) return renderGuestTrade();
+  const rate = Number(S.settings.withdrawRate || 125);
+  const bdt = wdState.usd * rate;
+  const bal = Number(S.wallet.balance || 0);
+  const lim = S.settings.withdrawLimits || { min: 1, max: 350 };
+  const maxAllowed = Math.min(lim.max, bal);
+
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">⬆️ Withdraw</div>
+        <button class="btn btn-ghost" style="padding:6px 10px;min-height:auto;font-size:12px" onclick="window.__olim_nav('wallet')">Back</button>
+      </div>
+
+      <div class="card mb-3">
+        <div class="fs-12 text-dim">Available Balance</div>
+        <div class="fs-24 fw-800 mt-2">${fmtUSD(bal)}</div>
+        <div class="fs-11 text-mute mt-2">Rate: $1 = ৳${rate} · Min $${lim.min} · Max $${lim.max}</div>
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">USD Amount</label>
+        <input class="input" type="number" min="${lim.min}" max="${maxAllowed}" value="${wdState.usd}" onchange="window.__olim_setWdAmount(this.value)" />
+        <div class="row-between mt-3">
+          <div class="fs-13 text-dim">You will receive</div>
+          <div class="fs-18 fw-800 text-warn">${fmtBDT(bdt)}</div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Payment Method</label>
+        <div class="col">
+          <button class="btn ${wdState.method==="bkash"?"btn-primary":"btn-ghost"}" style="justify-content:flex-start;padding:14px" onclick="window.__olim_setWdMethod('bkash')">
+            <span style="font-size:18px">🟣</span><span style="flex:1;text-align:left">bKash</span>${wdState.method==="bkash"?"<span>✓</span>":""}
+          </button>
+          <button class="btn ${wdState.method==="nagad"?"btn-primary":"btn-ghost"}" style="justify-content:flex-start;padding:14px" onclick="window.__olim_setWdMethod('nagad')">
+            <span style="font-size:18px">🟠</span><span style="flex:1;text-align:left">Nagad</span>${wdState.method==="nagad"?"<span>✓</span>":""}
+          </button>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <label class="label">Payment Number</label>
+        <input class="input" id="wd-number" placeholder="01XXXXXXXXX" value="${esc(wdState.number)}" />
+      </div>
+
+      <div class="card mb-3">
+        <div class="fw-700 mb-2">📝 Confirm Details</div>
+        <div class="row-between fs-13" style="padding:4px 0"><span class="text-dim">Email</span><span>${esc(S.user.email)}</span></div>
+        <div class="row-between fs-13" style="padding:4px 0"><span class="text-dim">USD Amount</span><span class="fw-600">${fmtUSD(wdState.usd)}</span></div>
+        <div class="row-between fs-13" style="padding:4px 0"><span class="text-dim">BDT Amount</span><span class="fw-600">${fmtBDT(bdt)}</span></div>
+        <div class="row-between fs-13" style="padding:4px 0"><span class="text-dim">Method</span><span>${wdState.method}</span></div>
+        <div class="row-between fs-13" style="padding:4px 0"><span class="text-dim">Date</span><span>${new Date().toLocaleString()}</span></div>
+      </div>
+
+      <button class="btn btn-loss btn-block" id="wd-submit" onclick="window.__olim_submitWithdraw()">Confirm Withdrawal</button>
+
+      <div class="alert alert-info mt-3 fs-12">
+        Your withdrawal request has been submitted. Processing may take up to 48 hours. If you do not receive your payment within the stated period, please contact Live Support.
+      </div>
+    </div>`;
+}
+
+async function doSubmitWithdraw() {
+  const btn = $("#wd-submit");
+  const number = $("#wd-number")?.value || "";
+  const amt = Number(wdState.usd);
+  const bal = Number(S.wallet.balance || 0);
+  if (!amt || amt < 1) { toast("Invalid Amount", "error"); return; }
+  if (amt > bal) { toast("Insufficient Balance", "error"); return; }
+  if (!number || number.length < 6) { toast("Invalid payment number", "error"); return; }
+
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Submitting…`;
+  try {
+    await submitWithdrawal({ usdAmount: amt, method: wdState.method, number });
+    toast("Withdrawal submitted", "success");
+    nav("wallet");
+  } catch (e) {
+    toast(e.message || "Submit failed", "error");
+  } finally {
+    btn.disabled = false; btn.innerHTML = "Confirm Withdrawal";
+  }
+}
+
+/* ---------- History ---------- */
+let historyFilter = "ALL";
+function renderHistory() {
+  if (!S.user) return renderGuestTrade();
+  const filtered = S.trades.filter(t => {
+    if (historyFilter === "ALL") return true;
+    if (historyFilter === "ACTIVE") return t.status === "active";
+    if (historyFilter === "PROFIT") return t.result === "PROFIT";
+    if (historyFilter === "LOSS") return t.result === "LOSS";
+    return true;
+  });
+  const filters = ["ALL","ACTIVE","PROFIT","LOSS"];
+
+  return `
+    <div class="page">
+      <div class="fs-20 fw-800 mb-3">📋 Trade History</div>
+
+      <div class="cat-tabs mb-3">
+        ${filters.map(f => `<button class="cat-tab ${historyFilter===f?"active":""}" onclick="window.__olim_setHistFilter('${f}')">${f}</button>`).join("")}
+      </div>
+
+      ${filtered.length === 0 ? `
+        <div class="card empty"><div class="empty-icon">📭</div>No trades ${historyFilter !== "ALL" ? "in " + historyFilter : "yet"}</div>
+      ` : filtered.map(t => renderTradeRow(t)).join("")}
+    </div>`;
+}
+
+function renderTradeRow(t) {
+  const win = t.result === "PROFIT";
+  const isActive = t.status === "active";
+  return `
+    <div class="card mb-3">
+      <div class="row-between mb-2">
+        <div class="fw-700">${esc(t.market)}</div>
+        <span class="badge ${isActive ? "badge-processing" : win ? "badge-approved" : "badge-rejected"}">${isActive ? "ACTIVE" : t.result}</span>
+      </div>
+      <div class="grid-2" style="gap:8px">
+        <div><div class="fs-11 text-mute">Amount</div><div class="fs-14 fw-600">${fmtUSD(t.amount)}</div></div>
+        <div><div class="fs-11 text-mute">Direction</div><div class="fs-14 fw-600 ${t.direction==="UP"?"text-profit":"text-loss"}">${t.direction}</div></div>
+        <div><div class="fs-11 text-mute">Entry</div><div class="fs-13">${(t.entryPrice||0) < 10 ? (t.entryPrice||0).toFixed(5) : (t.entryPrice||0).toFixed(2)}</div></div>
+        <div><div class="fs-11 text-mute">Exit</div><div class="fs-13">${t.exitPrice ? (t.exitPrice < 10 ? t.exitPrice.toFixed(5) : t.exitPrice.toFixed(2)) : "—"}</div></div>
+        <div><div class="fs-11 text-mute">Duration</div><div class="fs-13">${fmtDur(t.duration)}</div></div>
+        <div><div class="fs-11 text-mute">Result</div><div class="fs-14 fw-700 ${isActive ? "text-dim" : win ? "text-profit" : "text-loss"}">${isActive ? "…" : (win ? "+$" + (t.profit||0).toFixed(2) : "-$" + t.amount.toFixed(2))}</div></div>
+      </div>
+      <div class="fs-10 text-mute mt-2">${new Date(t.startTime||0).toLocaleString()}</div>
+    </div>`;
+}
+
+/* ---------- Profile ---------- */
+function renderProfile() {
+  if (!S.user) return renderGuestTrade();
+  const p = S.profile || {};
+  const emailVerified = auth.currentUser?.emailVerified || p.emailVerified;
+
+  return `
+    <div class="page">
+      <div class="fs-20 fw-800 mb-3">👤 Profile</div>
+
+      <div class="card">
+        <div class="row" style="gap:14px">
+          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">${esc((p.name||"U").slice(0,1).toUpperCase())}</div>
+          <div style="flex:1;min-width:0">
+            <div class="fw-700 fs-16" style="overflow:hidden;text-overflow:ellipsis">${esc(p.name || "User")}</div>
+            <div class="fs-12 text-dim" style="overflow:hidden;text-overflow:ellipsis">${esc(p.email || "")}</div>
+            <div class="fs-12 text-dim">${esc(p.phone || "")}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="row-between fs-14" style="padding:6px 0"><span class="text-dim">Referral ID</span><span class="fw-700">${esc(p.referralId || "—")}</span></div>
+        <div class="row-between fs-14" style="padding:6px 0"><span class="text-dim">Balance</span><span class="fw-700">${fmtUSD(S.wallet.balance)}</span></div>
+        <div class="row-between fs-14" style="padding:6px 0"><span class="text-dim">Email</span>${emailVerified ? `<span class="verified-badge">✓ Verified</span>` : `<span class="unverified-badge">Not Verified</span>`}</div>
+        <div class="row-between fs-14" style="padding:6px 0"><span class="text-dim">NID</span><span class="badge badge-mute">Not submitted</span></div>
+      </div>
+
+      <div class="card mt-3" style="padding:0">
+        <div class="list-item-btn" onclick="window.__olim_nav('verification')"><span>🛡️ Verification Center</span><span>›</span></div>
+        <div class="list-item-btn" onclick="window.__olim_nav('referral')"><span>🎁 Referral Program</span><span>›</span></div>
+        <div class="list-item-btn" onclick="window.__olim_nav('notifications')"><span>🔔 Notifications</span><span>›</span></div>
+        <div class="list-item-btn" onclick="window.__olim_nav('tutorials')"><span>📚 Tutorials</span><span>›</span></div>
+        <div class="list-item-btn" onclick="window.__olim_changePassword()"><span>🔐 Change Password</span><span>›</span></div>
+        ${S.settings.support.enabled ? `<div class="list-item-btn" onclick="window.__olim_openSupport()"><span>💬 ${esc(S.settings.support.title)}</span><span>›</span></div>` : ""}
+        <div class="list-item-btn" style="color:var(--loss)" onclick="window.__olim_logout()"><span>🚪 Logout</span><span>›</span></div>
+      </div>
+
+      ${!emailVerified ? `
+        <div class="card mt-3">
+          <div class="fw-700 mb-2">✉️ Verify your email</div>
+          <div class="fs-12 text-dim mb-3">Verify <b>${esc(S.user.email)}</b> to unlock all features.</div>
+          <button class="btn btn-primary btn-block" onclick="window.__olim_nav('verifyEmail')">Verify Now</button>
+        </div>
+      ` : ""}
+    </div>`;
+}
+
+/* ---------- Verification ---------- */
+function renderVerification() {
+  if (!S.user) return renderGuestTrade();
+  const p = S.profile || {};
+  const emailVerified = auth.currentUser?.emailVerified || p.emailVerified;
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">🛡️ Verification Center</div>
+        <button class="btn btn-ghost" style="padding:6px 10px;min-height:auto;font-size:12px" onclick="window.__olim_nav('profile')">Back</button>
+      </div>
+
+      <div class="card mb-3">
+        <div class="row-between mb-3">
+          <div class="fw-700">✉️ Email Verification</div>
+          ${emailVerified ? `<span class="verified-badge">✓ Verified</span>` : `<span class="unverified-badge">Not Verified</span>`}
+        </div>
+        <div class="fs-13 text-dim mb-3">${esc(S.user.email)}</div>
+        <div class="row" style="gap:8px">
+          ${!emailVerified ? `<button class="btn btn-primary" style="flex:1" onclick="window.__olim_sendVerify()">Send Link</button>` : ""}
+          <button class="btn btn-ghost" style="flex:1" onclick="window.__olim_refreshVerify()">Refresh Status</button>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="fw-700 mb-3">🆔 NID Verification</div>
+        <div class="fs-12 text-dim mb-3">Submit your NID information. Data is stored securely and reviewed by admin only.</div>
+        <div class="field"><label class="label">NID Name *</label><input class="input" id="nid-name" /></div>
+        <div class="grid-2">
+          <div class="field"><label class="label">Father's Name</label><input class="input" id="nid-father" /></div>
+          <div class="field"><label class="label">Mother's Name</label><input class="input" id="nid-mother" /></div>
+        </div>
+        <div class="field"><label class="label">Date of Birth</label><input class="input" id="nid-dob" type="date" /></div>
+        <div class="field"><label class="label">NID Number *</label><input class="input" id="nid-number" /></div>
+        <div class="grid-2">
+          <div class="field"><label class="label">District</label><input class="input" id="nid-district" /></div>
+          <div class="field"><label class="label">Thana/Upazila</label><input class="input" id="nid-thana" /></div>
+        </div>
+        <div class="field"><label class="label">Village/Address</label><input class="input" id="nid-address" /></div>
+        <button class="btn btn-primary btn-block mt-2" id="nid-submit" onclick="window.__olim_submitNID()">Submit Verification</button>
+      </div>
+    </div>`;
+}
+
+async function doSubmitNID() {
+  const data = {
+    nidName: $("#nid-name").value.trim(),
+    fatherName: $("#nid-father").value.trim(),
+    motherName: $("#nid-mother").value.trim(),
+    dob: $("#nid-dob").value,
+    nidNumber: $("#nid-number").value.trim(),
+    district: $("#nid-district").value.trim(),
+    thana: $("#nid-thana").value.trim(),
+    address: $("#nid-address").value.trim(),
+  };
+  if (!data.nidName || !data.nidNumber) { toast("NID Name and Number required", "error"); return; }
+  const btn = $("#nid-submit");
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Submitting…`;
+  try {
+    await submitNID(data);
+    toast("Verification submitted", "success");
+    nav("profile");
+  } catch (e) { toast(e.message || "Failed", "error"); }
+  finally { btn.disabled = false; btn.innerHTML = "Submit Verification"; }
+}
+
+/* ---------- Tutorials ---------- */
+function renderTutorials() {
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">📚 Tutorials</div>
+        <button class="btn btn-ghost" style="padding:6px 10px;min-height:auto;font-size:12px" onclick="window.__olim_nav('home')">Back</button>
+      </div>
+
+      ${S.tutorials.length === 0 ? `
+        <div class="card empty"><div class="empty-icon">📚</div>No tutorials available yet</div>
+      ` : S.tutorials.map(t => `
+        <div class="card mb-3" style="cursor:pointer" onclick="window.__olim_openTutorial('${esc(t.url || '')}')">
+          <div class="row-between mb-2">
+            <div class="fw-700 fs-14">${esc(t.title || "Tutorial")}</div>
+            <span class="badge badge-info">${esc(t.category || "Other")}</span>
+          </div>
+          <div class="fs-12 text-dim">${esc(t.description || "")}</div>
+          ${t.url ? `<div class="fs-12 text-profit mt-2">▶ Watch / Open</div>` : ""}
+        </div>
+      `).join("")}
+    </div>`;
+}
+
+/* ---------- Notifications ---------- */
+function renderNotifications() {
+  if (!S.user) return renderGuestTrade();
+  const unread = S.notifications.filter(n => !n.read).length;
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">🔔 Notifications</div>
+        ${unread > 0 ? `<button class="btn btn-ghost" style="padding:6px 10px;min-height:auto;font-size:12px" onclick="window.__olim_markAllRead()">Mark All Read</button>` : ""}
+      </div>
+
+      ${S.notifications.length === 0 ? `
+        <div class="card empty"><div class="empty-icon">🔔</div>No notifications yet</div>
+      ` : S.notifications.map(n => `
+        <div class="card mb-2" style="border-left:3px solid ${n.read ? 'var(--border)' : 'var(--primary)'};cursor:pointer" onclick="window.__olim_openNotification('${esc(n.id)}')">
+          <div class="row-between mb-1">
+            <div class="fw-600 fs-14">${esc(n.title || "")}</div>
+            ${!n.read ? `<span class="badge badge-info" style="font-size:10px">NEW</span>` : ""}
+          </div>
+          <div class="fs-13 text-dim">${esc(n.message || "")}</div>
+          <div class="fs-11 text-mute mt-2">${new Date(n.createdAt || 0).toLocaleString()}</div>
+        </div>
+      `).join("")}
+    </div>`;
+}
+
+/* ---------- Referral ---------- */
+function renderReferral() {
+  if (!S.user) return renderGuestTrade();
+  const p = S.profile || {};
+  const refId = p.referralId || "—";
+  const link = `${location.origin}${location.pathname}?ref=${refId}`;
+
+  return `
+    <div class="page">
+      <div class="row-between mb-3">
+        <div class="fs-20 fw-800">🎁 Referral Program</div>
+        <button class="btn btn-ghost" style="padding:6px 10px;min-height:auto;font-size:12px" onclick="window.__olim_nav('profile')">Back</button>
+      </div>
+
+      <div class="card mb-3">
+        <div class="fs-12 text-dim">My Referral ID</div>
+        <div class="row-between mt-2">
+          <div class="fs-24 fw-800" style="letter-spacing:2px">${esc(refId)}</div>
+          <button class="btn btn-ghost" style="padding:8px 12px;min-height:auto;font-size:12px" onclick="window.__olim_copy('${esc(refId)}')">Copy</button>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="fs-12 text-dim mb-2">Referral Link</div>
+        <div class="fs-12" style="word-break:break-all;color:var(--primary)">${esc(link)}</div>
+        <button class="btn btn-primary btn-block mt-3" onclick="window.__olim_copy('${esc(link)}')">📋 Copy Referral Link</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="card text-center">
+          <div class="fs-11 text-dim">Total Referrals</div>
+          <div class="fs-24 fw-800 mt-2">0</div>
+        </div>
+        <div class="card text-center">
+          <div class="fs-11 text-dim">Earnings</div>
+          <div class="fs-24 fw-800 mt-2 text-profit">$0.00</div>
+        </div>
+      </div>
+
+      <div class="alert alert-info mt-3 fs-12">
+        Referral earnings are not guaranteed income. Rewards are calculated server-side when your referred users place eligible trades.
+      </div>
+    </div>`;
+}
+
+/* ---------- Auth pages ---------- */
+function renderAuth(mode) {
+  const isLogin = mode === "login";
+  const isSignup = mode === "signup";
+  const isForgot = mode === "forgot";
+
+  return `
+    <div class="app-shell">
+      <div class="auth-wrap">
+        <div class="auth-card">
+          <div class="logo mb-4" style="justify-content:center">
+            <div class="logo-mark">OL</div>
+            <div class="logo-text">
+              <div class="logo-name">${esc(S.settings.appName)}</div>
+              <div class="logo-tag">${esc(S.settings.tagline)}</div>
+            </div>
+          </div>
+
+          ${!isForgot ? `
+          <div class="tabs">
+            <button class="tab ${isLogin?"active":""}" onclick="window.__olim_nav('login')">Login</button>
+            <button class="tab ${isSignup?"active":""}" onclick="window.__olim_nav('signup')">Sign Up</button>
+          </div>` : ""}
+
+          ${isLogin ? `
+            <div class="field"><label class="label">Email / Gmail</label><input class="input" id="li-email" type="email" placeholder="you@example.com" autocomplete="email" /></div>
+            <div class="field"><label class="label">Password</label><input class="input" id="li-pass" type="password" placeholder="••••••••" autocomplete="current-password" /></div>
+            <button class="btn btn-primary btn-block" id="li-submit" onclick="window.__olim_login()">Login</button>
+            <div class="row-between mt-3">
+              <button class="btn btn-ghost" style="padding:6px 12px;min-height:auto;font-size:12px" onclick="window.__olim_nav('forgot')">Forgot Password?</button>
+              <button class="btn btn-ghost" style="padding:6px 12px;min-height:auto;font-size:12px" onclick="window.__olim_continueGuest()">Continue as Guest</button>
+            </div>
+          ` : isSignup ? `
+            <div class="field"><label class="label">Full Name</label><input class="input" id="su-name" placeholder="Your full name" autocomplete="name" /></div>
+            <div class="field"><label class="label">Mobile Number</label><input class="input" id="su-phone" placeholder="01XXXXXXXXX" autocomplete="tel" /></div>
+            <div class="field"><label class="label">Email / Gmail</label><input class="input" id="su-email" type="email" placeholder="you@example.com" autocomplete="email" /></div>
+            <div class="field"><label class="label">Password</label><input class="input" id="su-pass" type="password" placeholder="Min 6 characters" autocomplete="new-password" /></div>
+            <div class="field"><label class="label">Confirm Password</label><input class="input" id="su-pass2" type="password" placeholder="Re-enter password" autocomplete="new-password" /></div>
+            <div class="field"><label class="label">Referral ID (Optional)</label><input class="input" id="su-ref" placeholder="e.g. OLIMABCD12" value="${esc(new URLSearchParams(location.search).get("ref") || "")}" /></div>
+            <button class="btn btn-primary btn-block" id="su-submit" onclick="window.__olim_signup()">Create Account</button>
+          ` : `
+            <div class="fs-20 fw-800 mb-2">Forgot Password</div>
+            <div class="fs-13 text-dim mb-4">Enter the mobile number used at registration to receive a reset link.</div>
+            <div class="field"><label class="label">Mobile Number</label><input class="input" id="fp-phone" placeholder="01XXXXXXXXX" /></div>
+            <button class="btn btn-primary btn-block" id="fp-submit" onclick="window.__olim_forgot()">Send Reset Link</button>
+            <button class="btn btn-ghost btn-block mt-3" onclick="window.__olim_nav('login')">Back to Login</button>
+          `}
+
+          <div class="alert alert-info mt-4 fs-12 text-center">
+            By continuing you agree to the platform's terms and privacy policy.
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function doLogin(email, password) {
+  await signInWithEmailAndPassword(auth, email, password);
+}
+
+async function doLoginClick() {
+  const btn = $("#li-submit");
+  const email = ($("#li-email")?.value || "").trim();
+  const pass = $("#li-pass")?.value || "";
+  if (!email || !pass) { toast("Enter email and password", "error"); return; }
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  try {
+    await doLogin(email, pass);
+    S.guest = false;
+    nav("home");
+    toast("Welcome back!", "success");
+  } catch (e) {
+    const msg = (e.code || "").includes("user-not-found") ? "No account with that email"
+      : (e.code || "").includes("wrong-password") ? "Incorrect password"
+      : (e.code || "").includes("invalid-email") ? "Invalid Email"
+      : (e.code || "").includes("too-many") ? "Too many attempts. Try again later."
+      : (e.code || "").includes("invalid-credential") ? "Invalid email or password"
+      : e.message || "Authentication Error";
+    toast(msg, "error");
+  } finally { btn.disabled = false; btn.innerHTML = "Login"; }
+}
+
+async function doSignupClick() {
+  const btn = $("#su-submit");
+  const name = ($("#su-name")?.value || "").trim();
+  const phone = ($("#su-phone")?.value || "").trim();
+  const email = ($("#su-email")?.value || "").trim();
+  const pass = $("#su-pass")?.value || "";
+  const pass2 = $("#su-pass2")?.value || "";
+  const ref = ($("#su-ref")?.value || "").trim();
+
+  if (name.length < 2) return toast("Enter a valid name", "error");
+  if (!/^0?1\d{9}$/.test(phone.replace(/[^0-9]/g,""))) return toast("Invalid phone number", "error");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast("Invalid email", "error");
+  if (pass.length < 6) return toast("Password must be at least 6 characters", "error");
+  if (pass !== pass2) return toast("Passwords do not match", "error");
+
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  try {
+    await doSignup({ name, phone, email, password: pass, referral: ref });
+    nav("verifyEmail");
+    toast("Account created! Check your email.", "success");
+  } catch (e) {
+    const msg = (e.code || "").includes("email-already-in-use") ? "Email already in use"
+      : (e.code || "").includes("invalid-email") ? "Invalid Email"
+      : (e.code || "").includes("weak-password") ? "Password too weak"
+      : e.message || "Signup failed";
+    toast(msg, "error");
+  } finally { btn.disabled = false; btn.innerHTML = "Create Account"; }
+}
+
+async function doForgotClick() {
+  const btn = $("#fp-submit");
+  const phone = ($("#fp-phone")?.value || "").trim();
+  if (!phone) { toast("Enter mobile number", "error"); return; }
+  btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>`;
+  try {
+    await resetByPhone(phone);
+    toast("If an account exists, a reset link has been sent.", "success");
+    setTimeout(() => nav("login"), 1500);
+  } catch (e) {
+    toast("Unable to process. Try again.", "error");
+  } finally { btn.disabled = false; btn.innerHTML = "Send Reset Link"; }
+}
+
+/* ---------- Verify Email ---------- */
+function renderVerifyEmail() {
+  const verified = auth.currentUser?.emailVerified || S.profile?.emailVerified;
+  return `
+    <div class="app-shell">
+      <div class="auth-wrap">
+        <div class="auth-card text-center">
+          <div style="font-size:56px;margin-bottom:12px">${verified ? "✅" : "✉️"}</div>
+          <div class="fs-20 fw-800 mb-2">${verified ? "Email Verified" : "Verify Your Email"}</div>
+          <div class="fs-13 text-dim mb-4">${esc(auth.currentUser?.email || "")}</div>
+          <div class="mb-4">
+            ${verified ? `<span class="verified-badge">✓ Verified</span>` : `<span class="unverified-badge">Not Verified</span>`}
+          </div>
+          ${!verified ? `
+            <button class="btn btn-primary btn-block mb-2" onclick="window.__olim_sendVerify()">Send Verification Link</button>
+            <button class="btn btn-ghost btn-block mb-2" onclick="window.__olim_sendVerify()">Resend</button>
+          ` : ""}
+          <button class="btn btn-ghost btn-block mb-2" onclick="window.__olim_refreshVerify()">Refresh Status</button>
+          <button class="btn btn-primary btn-block mt-3" onclick="window.__olim_nav('home')">Continue to App</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ---------- Password Change Modal ---------- */
+function showChangePasswordModal() {
+  const modalRoot = $("#modal-root");
+  modalRoot.innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this)window.__olim_closeModal()">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div class="fs-18 fw-800 mb-3">🔐 Change Password</div>
+        <div class="field"><label class="label">Current Password</label><input class="input" id="cp-old" type="password" /></div>
+        <div class="field"><label class="label">New Password</label><input class="input" id="cp-new" type="password" /></div>
+        <div class="field"><label class="label">Confirm New Password</label><input class="input" id="cp-new2" type="password" /></div>
+        <div class="row" style="gap:8px">
+          <button class="btn btn-ghost" style="flex:1" onclick="window.__olim_closeModal()">Cancel</button>
+          <button class="btn btn-primary" style="flex:1" onclick="window.__olim_submitPassword()">Update</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function doChangePassword() {
+  const oldP = $("#cp-old").value;
+  const newP = $("#cp-new").value;
+  const new2 = $("#cp-new2").value;
+  if (!oldP || !newP) return toast("Fill all fields", "error");
+  if (newP.length < 6) return toast("Password too short", "error");
+  if (newP !== new2) return toast("Passwords do not match", "error");
+  try {
+    const cred = EmailAuthProvider.credential(auth.currentUser.email, oldP);
+    await reauthenticateWithCredential(auth.currentUser, cred);
+    await updatePassword(auth.currentUser, newP);
+    window.__olim_closeModal();
+    toast("Password updated", "success");
+  } catch (e) {
+    toast(e.message || "Failed to update", "error");
+  }
+}
+
+/* ---------- Chart ---------- */
+function drawTradeChart() {
+  const canvas = $("#trade-chart");
+  if (!canvas) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+  const w = rect.width, h = rect.height;
+
+  ctx.clearRect(0, 0, w, h);
+
+  ctx.strokeStyle = "rgba(34,48,82,0.5)";
+  ctx.lineWidth = 1;
+  for (let i = 1; i < 5; i++) {
+    const y = (h/5)*i;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+  }
+
+  if (priceHistory.length < 2) {
+    ctx.fillStyle = "#5a6b8c"; ctx.font = "12px sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("Loading chart...", w/2, h/2);
+    return;
+  }
+
+  const prices = priceHistory.map(x => x.p);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const range = max - min || 1;
+  const pad = 12;
+  const yFor = p => h - pad - ((p - min) / range) * (h - pad*2);
+  const xFor = (i, n) => pad + (i/(n-1)) * (w - pad*2);
+
+  const isUp = prices[prices.length-1] >= prices[0];
+  const color = isUp ? "#10b981" : "#ef4444";
+
+  const grd = ctx.createLinearGradient(0, 0, 0, h);
+  grd.addColorStop(0, isUp ? "rgba(16,185,129,0.35)" : "rgba(239,68,68,0.35)");
+  grd.addColorStop(1, "rgba(0,0,0,0)");
+
+  ctx.beginPath();
+  prices.forEach((p,i) => {
+    const x = xFor(i, prices.length), y = yFor(p);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.lineTo(w - pad, h);
+  ctx.lineTo(pad, h);
+  ctx.closePath();
+  ctx.fillStyle = grd;
+  ctx.fill();
+
+  ctx.beginPath();
+  prices.forEach((p,i) => {
+    const x = xFor(i, prices.length), y = yFor(p);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  const lastX = xFor(prices.length-1, prices.length);
+  const lastY = yFor(prices[prices.length-1]);
+  ctx.beginPath(); ctx.arc(lastX, lastY, 4, 0, Math.PI*2);
+  ctx.fillStyle = color; ctx.fill();
+  ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+}
+
+/* ---------- UI Tick ---------- */
+setInterval(() => {
+  if (S.activeTrade) {
+    const remain = Math.max(0, Math.floor((S.activeTrade.endTime - nowMs())/1000));
+    const el = $("#trade-count");
+    if (el) el.textContent = remain;
+  }
+  if (S.currentRoute === "trade" && !S.activeTrade && S.user && $("#trade-chart")) {
+    priceHistory.push({ t: nowMs(), p: marketPrice(tradeState.market) });
+    priceHistory = priceHistory.filter(x => nowMs() - x.t < 60000);
+    drawTradeChart();
+  }
+}, 1000);
+
+/* ---------- Window Handlers ---------- */
+window.__olim_nav = nav;
+window.__olim_render = render;
+window.__olim_openSupport = () => {
+  const url = S.settings.support?.url;
+  if (!isHttps(url)) { toast("Support URL not configured", "error"); return; }
+  window.open(url, "_blank", "noopener,noreferrer");
+};
+window.__olim_openMarket = (symbol) => {
+  tradeState.market = symbol;
+  if (!S.user) { toast("Login required to trade"); nav("login"); return; }
+  nav("trade");
+};
+window.__olim_setCat = (c) => { marketCategory = c; render(); };
+window.__olim_setTradeMarket = (m) => { tradeState.market = m; render(); };
+window.__olim_setTradeAmount = (v) => {
+  const n = Number(v);
+  if (!n || n <= 0) return;
+  tradeState.amount = n;
+  render();
+};
+window.__olim_setTradeDuration = (s) => { tradeState.duration = s; render(); };
+window.__olim_placeTrade = async (dir) => {
+  try { await placeTrade({
+    marketSymbol: tradeState.market,
+    direction: dir,
+    amount: tradeState.amount,
+    durationSec: tradeState.duration,
+  }); }
+  catch (e) { toast(e.message || "Trade failed", "error"); }
+};
+window.__olim_setDeposit = (v) => {
+  const n = Number(v);
+  if (!n || n <= 0) return;
+  depositState.usd = n;
+  render();
+};
+window.__olim_setMethod = (k) => { depositState.method = k; render(); };
+window.__olim_submitDeposit = doSubmitDeposit;
+window.__olim_setWdAmount = (v) => { const n = Number(v); if (n>0) { wdState.usd = n; render(); } };
+window.__olim_setWdMethod = (k) => { wdState.method = k; render(); };
+window.__olim_submitWithdraw = doSubmitWithdraw;
+window.__olim_setHistFilter = (f) => { historyFilter = f; render(); };
+window.__olim_sendVerify = async () => {
+  try { await sendVerify(); toast("Verification link sent", "success"); }
+  catch { toast("Send failed", "error"); }
+};
+window.__olim_refreshVerify = async () => {
+  const v = await refreshVerification();
+  toast(v ? "Email verified ✓" : "Still not verified", v ? "success" : "info");
+  render();
+};
+window.__olim_submitNID = doSubmitNID;
+window.__olim_login = doLoginClick;
+window.__olim_signup = doSignupClick;
+window.__olim_forgot = doForgotClick;
+window.__olim_logout = async () => {
+  await doLogout();
+  nav("login");
+  toast("Logged out", "success");
+};
+window.__olim_continueGuest = () => { S.guest = true; nav("home"); };
+window.__olim_changePassword = showChangePasswordModal;
+window.__olim_closeModal = () => { $("#modal-root").innerHTML = ""; };
+window.__olim_submitPassword = doChangePassword;
+window.__olim_copy = async (txt) => {
+  try { await navigator.clipboard.writeText(txt); toast("Copied", "success"); }
+  catch { toast("Copy failed", "error"); }
+};
+window.__olim_openNotification = async (id) => {
+  const n = S.notifications.find(x => x.id === id);
+  if (!n || !S.user) return;
+  await update(ref(db, `notifications/${S.user.uid}/${id}`), { read: true });
+  if (n.url) {
+    if (n.url.startsWith("/")) nav(n.url.replace("/", ""));
+    else if (isHttps(n.url)) window.open(n.url, "_blank", "noopener,noreferrer");
+  }
+};
+window.__olim_markAllRead = async () => {
+  if (!S.user) return;
+  const updates = {};
+  S.notifications.forEach(n => { if (!n.read) updates[`notifications/${S.user.uid}/${n.id}/read`] = true; });
+  if (Object.keys(updates).length) {
+    await update(ref(db), updates);
+    toast("All marked as read", "success");
+  }
+};
+window.__olim_openTutorial = (url) => {
+  if (!url) return;
+  if (isHttps(url)) window.open(url, "_blank", "noopener,noreferrer");
+  else toast("Invalid tutorial URL", "error");
+};
+
+/* ---------- Bootstrap (IMPORTANT — non-blocking) ---------- */
+
+// Subscribe to public data BEFORE auth (so settings load fast)
+subscribeSettings();
+subscribeMarkets();
+subscribeTutorials();
+subscribePaymentMethods();
+subscribeConnection();
+
+// Set initial route
+S.currentRoute = (new URLSearchParams(location.search).has("ref") && !S.user) ? "signup" : "home";
+
+// Initial render (splash)
+render();
+
+// Failsafe: force hide splash after 3s no matter what
+setTimeout(() => {
+  if (!S.settingsLoaded) S.settingsLoaded = true;
+  if (!S.authLoaded) S.authLoaded = true;
+  render();
+}, 3000);
+
+// Redraw chart on resize
+let rt;
+window.addEventListener("resize", () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => { if ($("#trade-chart")) drawTradeChart(); }, 120);
+});
+
 </script>
 
 </body>
-</html>
+    </html>
